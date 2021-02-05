@@ -363,6 +363,16 @@ namespace QTTabBarLib {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        public static System.Drawing.Bitmap imgRebar {
+            get {
+                object obj = ResourceManager.GetObject("imgRebar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         public static System.Drawing.Bitmap imgSubDirBtnCold {
             get {
                 object obj = ResourceManager.GetObject("imgSubDirBtnCold", resourceCulture);
@@ -766,19 +776,6 @@ namespace QTTabBarLib {
         public static System.Drawing.Bitmap TitleBar {
             get {
                 object obj = ResourceManager.GetObject("TitleBar", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-
-
-        /// <summary>
-        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
-        /// </summary>
-        public static System.Drawing.Bitmap imgRebar
-        {
-            get
-            {
-                object obj = ResourceManager.GetObject("imgRebar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -24,6 +24,10 @@ using BandObjectLib;
 using Microsoft.Win32;
 using SHDocVw;
 
+
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTTabBar;
+
 namespace QTTabBarLib {
 
     [Guid("D2BF470E-ED1C-487F-A777-2BD8835EB6CE"), ComVisible(true), ClassInterface(ClassInterfaceType.None)]

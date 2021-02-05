@@ -15,7 +15,8 @@
 //    You should have received a copy of the GNU General Public License
 //    along with QTTabBar.  If not, see <http://www.gnu.org/licenses/>.
 
-using QTPlugin.Interop;
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTPluginLib;
 
 namespace QTPlugin {
     public interface IPluginClient {

@@ -26,7 +26,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.ComponentModel;
 using QTPlugin;
-using QTPlugin.Interop;
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTPluginLib;
+
 using QTTabBarLib;
 using System.IO;
 

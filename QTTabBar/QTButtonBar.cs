@@ -34,6 +34,11 @@ using Microsoft.Win32;
 using QTPlugin;
 using QTTabBarLib.Interop;
 
+
+
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTTabBar;
+
 namespace QTTabBarLib {
     [ComVisible(true), Guid("d2bf470e-ed1c-487f-a666-2bd8835eb6ce")]
     public sealed class QTButtonBar : BandObject {
@@ -180,7 +185,7 @@ namespace QTTabBarLib {
                 uint uFlags = 0;
                 StringBuilder pszBuf = new StringBuilder(260);
                 if(shellFolder.GetDisplayNameOf(pIDLLast, uFlags, out strret) == 0) {
-                    PInvoke.StrRetToBuf(ref strret, pIDLLast, pszBuf, pszBuf.Capacity);
+                    PInvoke.StrRetToBuf(ref strret, pIDLLast, pszBuf, (uint)pszBuf.Capacity);
                 }
                 if(pszBuf.Length > 0) {
                     return re.IsMatch(pszBuf.ToString());
@@ -1177,10 +1182,11 @@ namespace QTTabBarLib {
                         }
                         bool useFC = tabbar != null && tabbar.pluginServer.FilterCorePlugin != null;
                         IFilterCore iFilterCore = null;
-                        QTPlugin.Interop.IShellFolder folder3 = null;
+                        
+                        BandObjectLib.Interop.QTPluginLib.IShellFolder folder3 = null;
                         if(useFC) {
                             iFilterCore = tabbar.pluginServer.FilterCorePlugin;
-                            folder3 = (QTPlugin.Interop.IShellFolder)shellFolder;
+                            folder3 = (BandObjectLib.Interop.QTPluginLib.IShellFolder)shellFolder;
                         }
 
                         if(!useFC && (regex.ToString().Length == 0 || regex.ToString() == ".*")) {

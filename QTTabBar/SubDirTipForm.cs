@@ -26,6 +26,9 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using QTTabBarLib.Interop;
 
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTTabBar;
+
 namespace QTTabBarLib {
     internal sealed class SubDirTipForm : Form {
         private IContainer components;

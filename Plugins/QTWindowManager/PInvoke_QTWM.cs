@@ -18,7 +18,10 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
-using QTPlugin.Interop;
+
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTPluginLib;
+
 
 namespace QuizoPlugins {
     internal delegate bool EnumWndProc(IntPtr hwnd, IntPtr lParam);

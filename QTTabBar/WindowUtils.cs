@@ -21,6 +21,9 @@ using BandObjectLib;
 using Microsoft.Win32;
 using QTTabBarLib.Interop;
 
+
+using BandObjectLib.Interop;
+
 namespace QTTabBarLib {
     internal static class WindowUtils {
         public static void BringExplorerToFront(IntPtr hwndExplr) {

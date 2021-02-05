@@ -76,24 +76,6 @@
     <Compile Include="IEncodingDetector.cs" />
     <Compile Include="IFilter.cs" />
     <Compile Include="IFilterCore.cs" />
-    <Compile Include="Interop\FOLDERSETTINGS.cs" />
-    <Compile Include="Interop\FOLDERVIEWMODE.cs" />
-    <Compile Include="Interop\IEnumIDList.cs" />
-    <Compile Include="Interop\IFolderView.cs" />
-    <Compile Include="Interop\IPersistFolder2.cs" />
-    <Compile Include="Interop\IShellBrowser.cs" />
-    <Compile Include="Interop\IShellFolder.cs" />
-    <Compile Include="Interop\IShellFolder2.cs" />
-    <Compile Include="Interop\IShellView.cs" />
-    <Compile Include="Interop\MSG.cs" />
-    <Compile Include="Interop\PInvoke.cs" />
-    <Compile Include="Interop\POINT.cs" />
-    <Compile Include="Interop\RECT.cs" />
-    <Compile Include="Interop\SHCOLUMNID.cs" />
-    <Compile Include="Interop\SHELLDETAILS.cs" />
-    <Compile Include="Interop\STRRET.cs" />
-    <Compile Include="Interop\STRRETinternal.cs" />
-    <Compile Include="Interop\VARIANT.cs" />
     <Compile Include="IPluginClient.cs" />
     <Compile Include="IPluginServer.cs" />
     <Compile Include="ITab.cs" />
@@ -129,7 +111,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="QTPluginLib.ruleset" />
+    <ProjectReference Include="..\BandObjectLib\BandObjectLib.csproj">
+      <Project>{BDB3B670-A17B-483E-954C-52FC2B6FF9D3}</Project>
+      <Name>BandObjectLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -25,6 +25,9 @@ using System.Reflection;
 using System.Windows.Forms;
 using QTTabBarLib.Interop;
 
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTTabBar;
+
 namespace QTTabBarLib {
     internal class DropDownMenuReorderable : DropDownMenuBase {
         private const int COUNT_SCROLL = 3;

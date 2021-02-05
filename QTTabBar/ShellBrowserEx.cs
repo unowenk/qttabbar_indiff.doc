@@ -24,6 +24,11 @@ using BandObjectLib;
 using QTPlugin;
 using QTTabBarLib.Interop;
 
+
+
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTTabBar;
+
 namespace QTTabBarLib {
     public class ShellBrowserEx : IDisposable {
         private IShellBrowser shellBrowser;

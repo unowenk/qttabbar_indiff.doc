@@ -2,6 +2,10 @@ using System;
 using System.Windows.Forms;
 using QTTabBarLib.Interop;
 
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTTabBar;
+
+
 namespace QTTabBarLib {
     public class FolderBrowserDialogEx : CommonDialog {
         public FolderBrowserDialogEx() {

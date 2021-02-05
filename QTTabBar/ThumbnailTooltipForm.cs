@@ -29,6 +29,9 @@ using System.Windows.Forms.VisualStyles;
 using BandObjectLib;
 using QTTabBarLib.Interop;
 
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTTabBar;
+
 namespace QTTabBarLib {
     internal sealed class ThumbnailTooltipForm : Form {
         private const string EMPTYFILE = "  *empty file";

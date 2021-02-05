@@ -23,6 +23,10 @@ using System.ServiceModel.Channels;
 using System.Threading;
 using QTTabBarLib.Interop;
 
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTTabBar;
+
+
 namespace QTTabBarLib {
     internal static class InstanceManager {
         private static Dictionary<Thread, QTTabBarClass> dictTabInstances = new Dictionary<Thread, QTTabBarClass>();

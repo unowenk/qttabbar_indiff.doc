@@ -25,11 +25,15 @@ using System.Windows.Forms;
 using QTPlugin;
 using QTTabBarLib.Interop;
 
+
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTTabBar;
+
 namespace QTTabBarLib {
     public sealed partial class QTTabBarClass {
         internal sealed class PluginServer : IPluginServer, IDisposable {
             private Dictionary<string, string[]> dicLocalizingStrings;
-            private QTPlugin.Interop.IShellBrowser shellBrowser;
+            private BandObjectLib.Interop.QTPluginLib.IShellBrowser shellBrowser;
             private QTTabBarClass tabBar;
             private Dictionary<string, Plugin> dicPluginInstances = new Dictionary<string, Plugin>();
             
@@ -51,7 +55,7 @@ namespace QTTabBarLib {
 
             public PluginServer(QTTabBarClass tabBar) {
                 this.tabBar = tabBar;
-                shellBrowser = (QTPlugin.Interop.IShellBrowser)this.tabBar.ShellBrowser.GetIShellBrowser();
+                shellBrowser = (BandObjectLib.Interop.QTPluginLib.IShellBrowser)this.tabBar.ShellBrowser.GetIShellBrowser();
                 dicLocalizingStrings = new Dictionary<string, string[]>();
                 foreach(string file in Config.Lang.PluginLangFiles) {
                     if(file.Length <= 0 || !File.Exists(file)) continue;

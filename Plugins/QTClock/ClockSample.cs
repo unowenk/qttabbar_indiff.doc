@@ -19,7 +19,9 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using QTPlugin;
-using QTPlugin.Interop;
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTPluginLib;
+
 
 namespace QuizoPlugins {
   //  [Plugin(PluginType.Interactive, Author = "Quizo", Name = "SampleClock", Version = "0.9.0.0", Description = "Sample clock plugin")]

@@ -19,7 +19,10 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 using QTPlugin;
-using QTPlugin.Interop;
+
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTPluginLib;
+
 
 namespace QuizoPlugins {
     // [Plugin(PluginType.Background, Author = "Quizo", Name = "Show StatusBar", Version = "0.9.0.0", Description = "ShowStatusBar")]

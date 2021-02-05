@@ -20,7 +20,10 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Microsoft.Win32;
 using QTPlugin;
-using QTPlugin.Interop;
+
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTPluginLib;
+
 
 namespace QuizoPlugins {
     // [Plugin(PluginType.Background, Author = "Quizo", Name = "MigemoLoader", Version = "0.9.1.0", Description = "Migemo integration")]

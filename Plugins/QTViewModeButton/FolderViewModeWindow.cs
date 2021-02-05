@@ -20,8 +20,12 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
-using QTPlugin.Interop;
 using ContentAlignment = System.Drawing.ContentAlignment;
+
+
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTPluginLib;
+
 
 namespace QuizoPlugins {
     internal sealed partial class FolderViewModeWindow : Form {
@@ -55,19 +59,19 @@ namespace QuizoPlugins {
             labelLIST.Image2 = Resource.imgList.Clone(rct, pf);
             labelDETAIL.Image2 = Resource.imgDetails.Clone(rct, pf);
 
-            labelTHUMBSTRIP.Tag = FOLDERVIEWMODE.FVM_THUMBSTRIP;
-            labelTHUMBNAIL.Tag = FOLDERVIEWMODE.FVM_THUMBNAIL;
-            labelTILE.Tag = FOLDERVIEWMODE.FVM_TILE;
-            labelICON.Tag = FOLDERVIEWMODE.FVM_ICON;
-            labelLIST.Tag = FOLDERVIEWMODE.FVM_LIST;
-            labelDETAIL.Tag = FOLDERVIEWMODE.FVM_DETAILS;
+            labelTHUMBSTRIP.Tag = FVM.THUMBSTRIP;
+            labelTHUMBNAIL.Tag = FVM.THUMBNAIL;
+            labelTILE.Tag = FVM.TILE;
+            labelICON.Tag = FVM.ICON;
+            labelLIST.Tag = FVM.LIST;
+            labelDETAIL.Tag = FVM.DETAILS;
 
             trackBar1.LostFocus += trackBar1_LostFocus;
             trackBar1.KeyDown += trackBar1_KeyDown;
         }
 
 
-        public void ShowWindow(Point pnt, FOLDERVIEWMODE fvmCurrentMode) {
+        public void ShowWindow(Point pnt, FVM fvmCurrentMode) {
             const uint SWP_NOACTIVATE = 0x0010;
             const int SW_SHOWNOACTIVATE = 4;
 
@@ -102,21 +106,21 @@ namespace QuizoPlugins {
             PInvoke.ShowWindow(Handle, 0);
         }
 
-        public FOLDERVIEWMODE ViewMode {
+        public FVM ViewMode {
             get {
                 switch(trackBar1.Value) {
                     case 5:
-                        return FOLDERVIEWMODE.FVM_THUMBSTRIP;
+                        return FVM.THUMBSTRIP;
                     case 4:
-                        return FOLDERVIEWMODE.FVM_THUMBNAIL;
+                        return FVM.THUMBNAIL;
                     case 3:
-                        return FOLDERVIEWMODE.FVM_TILE;
+                        return FVM.TILE;
                     case 1:
-                        return FOLDERVIEWMODE.FVM_LIST;
+                        return FVM.LIST;
                     case 0:
-                        return FOLDERVIEWMODE.FVM_DETAILS;
+                        return FVM.DETAILS;
                     default:
-                        return FOLDERVIEWMODE.FVM_ICON;
+                        return FVM.ICON;
                 }
             }
         }
@@ -171,17 +175,17 @@ namespace QuizoPlugins {
             }
         }
 
-        private static int ModeToInt(FOLDERVIEWMODE fvm) {
+        private static int ModeToInt(FVM fvm) {
             switch(fvm) {
-                case FOLDERVIEWMODE.FVM_THUMBSTRIP:
+                case FVM.THUMBSTRIP:
                     return 5;
-                case FOLDERVIEWMODE.FVM_THUMBNAIL:
+                case FVM.THUMBNAIL:
                     return 4;
-                case FOLDERVIEWMODE.FVM_TILE:
+                case FVM.TILE:
                     return 3;
-                case FOLDERVIEWMODE.FVM_LIST:
+                case FVM.LIST:
                     return 1;
-                case FOLDERVIEWMODE.FVM_DETAILS:
+                case FVM.DETAILS:
                     return 0;
                 default:
                     return 2;
@@ -224,7 +228,7 @@ namespace QuizoPlugins {
         }
 
         private void labelButtons_Click(object sender, EventArgs e) {
-            FOLDERVIEWMODE mode = (FOLDERVIEWMODE)((LabelEx)sender).Tag;
+            FVM mode = (FVM)((LabelEx)sender).Tag;
 
             trackBar1.Value = ModeToInt(mode);
         }

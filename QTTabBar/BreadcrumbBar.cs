@@ -21,6 +21,10 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using QTTabBarLib.Interop;
 
+
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTTabBar;
+
 namespace QTTabBarLib {
     class BreadcrumbBar {
         private const int TB_GETBUTTON = WM.USER + 23;

@@ -107,21 +107,11 @@
     <Compile Include="BandObject.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Interop\DBIM.cs" />
-    <Compile Include="Interop\DBIMF.cs" />
-    <Compile Include="Interop\DESKBANDINFO.cs" />
-    <Compile Include="Interop\ExplorerGUIDs.cs" />
-    <Compile Include="Interop\IDeskBand.cs" />
-    <Compile Include="Interop\IDockingWindow.cs" />
-    <Compile Include="Interop\IInputObject.cs" />
-    <Compile Include="Interop\IInputObjectSite.cs" />
-    <Compile Include="Interop\IObjectWithSite.cs" />
-    <Compile Include="Interop\IOleWindow.cs" />
-    <Compile Include="Interop\IPersistStream.cs" />
-    <Compile Include="Interop\MSG.cs" />
-    <Compile Include="Interop\POINT.cs" />
-    <Compile Include="Interop\RebarConstants.cs" />
-    <Compile Include="Interop\REBARBANDINFO.cs" />
+    <Compile Include="Interop\Constants.cs" />
+    <Compile Include="Interop\enum.cs" />
+    <Compile Include="Interop\internal.cs" />
+    <Compile Include="Interop\PInvoke.cs" />
+    <Compile Include="Interop\struct.cs" />
     <Compile Include="Interop\_IServiceProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -151,9 +141,6 @@
       <WrapperTool>tlbimp</WrapperTool>
       <Isolated>False</Isolated>
     </COMReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="BandObjectLib.ruleset" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

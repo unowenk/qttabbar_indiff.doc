@@ -38,6 +38,10 @@ using QTTabBarLib.Interop;
 using SHDocVw;
 using Timer = System.Windows.Forms.Timer;
 
+
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTTabBar;
+
 namespace QTTabBarLib {
     [ComVisible(true), Guid("d2bf470e-ed1c-487f-a333-2bd8835eb6ce")]
     public sealed partial class QTTabBarClass : BandObject {

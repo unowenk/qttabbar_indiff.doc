@@ -17,7 +17,11 @@
 
 using System;
 using System.Runtime.InteropServices;
-using QTPlugin.Interop;
+
+
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTPluginLib;
+
 
 namespace QuizoPlugins {
     internal static class PInvoke {

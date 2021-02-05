@@ -21,6 +21,11 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using QTTabBarLib.Interop;
 
+
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTTabBar;
+
+
 namespace QTTabBarLib {
     internal class ExtendedItemsView : ExtendedListViewCommon {
         private Point lastLButtonPoint;

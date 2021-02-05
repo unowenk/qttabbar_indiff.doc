@@ -20,8 +20,11 @@ using System.Globalization;
 using System.Media;
 using System.Windows.Forms;
 using QTPlugin;
-using QTPlugin.Interop;
 using System.Collections.Generic;
+
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTPluginLib;
+
 
 namespace QuizoPlugins {
     /// <summary>

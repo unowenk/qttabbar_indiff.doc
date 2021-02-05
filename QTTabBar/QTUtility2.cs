@@ -30,6 +30,8 @@ using Microsoft.Win32;
 using Microsoft.Win32.SafeHandles;
 using QTTabBarLib.Interop;
 
+using BandObjectLib.Interop;
+
 namespace QTTabBarLib {
     internal static class QTUtility2 {
         private const int THRESHOLD_ELLIPSIS = 40;

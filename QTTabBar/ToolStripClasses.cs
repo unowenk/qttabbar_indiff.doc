@@ -24,6 +24,9 @@ using System.Reflection;
 using System.Windows.Forms;
 using QTTabBarLib.Interop;
 
+
+using BandObjectLib.Interop;
+
 namespace QTTabBarLib {
     internal sealed class ToolStripClasses : ToolStrip {
         private bool fMA;

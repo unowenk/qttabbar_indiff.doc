@@ -61,6 +61,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BandObjectLib\BandObjectLib.csproj">
+      <Project>{BDB3B670-A17B-483E-954C-52FC2B6FF9D3}</Project>
+      <Name>BandObjectLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\QTPluginLib\QTPluginLib.csproj">
       <Project>{749BE612-0CAA-444E-8704-4CF9D9A6F653}</Project>
       <Name>QTPluginLib</Name>

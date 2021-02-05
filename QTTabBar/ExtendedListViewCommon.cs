@@ -25,6 +25,10 @@ using QTTabBarLib.Interop;
 using IDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 using Timer = System.Windows.Forms.Timer;
 
+
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTTabBar;
+
 namespace QTTabBarLib {
     internal abstract class ExtendedListViewCommon : AbstractListView {
 

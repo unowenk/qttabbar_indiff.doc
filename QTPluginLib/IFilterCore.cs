@@ -17,7 +17,8 @@
 
 using System;
 using System.Text.RegularExpressions;
-using QTPlugin.Interop;
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTPluginLib;
 
 namespace QTPlugin {
     public interface IFilterCore : IPluginClient {

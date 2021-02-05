@@ -19,6 +19,11 @@ using System;
 using System.Windows.Forms;
 using QTTabBarLib.Interop;
 
+
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTTabBar;
+
+
 namespace QTTabBarLib {
     class ListViewMonitor : IDisposable {
         public event EventHandler ListViewChanged;

@@ -29,9 +29,13 @@ using System.Windows.Forms.VisualStyles;
 using BandObjectLib;
 using Microsoft.Win32;
 using QTTabBarLib.Interop;
-using IShellBrowser = QTTabBarLib.Interop.IShellBrowser;
-using MSG = BandObjectLib.MSG;
+
+
 using Timer = System.Windows.Forms.Timer;
+
+
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTTabBar;
 
 
 namespace QTTabBarLib {
@@ -583,6 +587,14 @@ namespace QTTabBarLib {
             return false;
         }
 
+
+        public static int ListView_HitTest(IntPtr hwnd, IntPtr lParam)
+        {
+            LVHITTESTINFO structure = new LVHITTESTINFO { pt = QTUtility2.PointFromLPARAM(lParam) };
+            int num = (int)PInvoke.SendMessage(hwnd, 0x1012, IntPtr.Zero, ref structure);
+            return num;
+        }
+
         private IntPtr CallbackGetMsgProc_Desktop(int nCode, IntPtr wParam, IntPtr lParam) {
             const int WM_LBUTTONDBLCLK = 0x0203;
             //const int WM_MBUTTONUP = 0x0208;
@@ -613,7 +625,7 @@ namespace QTTabBarLib {
                     case WM_LBUTTONDBLCLK:
 
                         if(msg.hwnd == slvDesktop.Handle && Config.Desktop.DesktopDblClickEnabled) {
-                            int index = PInvoke.ListView_HitTest(slvDesktop.Handle, msg.lParam);
+                            int index = ListView_HitTest(slvDesktop.Handle, msg.lParam);
                             if(index == -1) {
                                 // do the menu on Taskbar thread.
                                 this.Invoke(() => {

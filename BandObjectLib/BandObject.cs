@@ -22,6 +22,9 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using SHDocVw;
 
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.BandObjectLib;
+
 
 namespace BandObjectLib {
     public class BandObject : UserControl, IDeskBand, IDockingWindow, IInputObject, IObjectWithSite, IOleWindow, IPersistStream {

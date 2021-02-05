@@ -23,6 +23,10 @@ using System.Media;
 using System.Windows.Forms;
 using QTTabBarLib.Interop;
 
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTTabBar;
+
+
 namespace QTTabBarLib {
     internal class MessageForm : Form {
         private Button btnCancel;

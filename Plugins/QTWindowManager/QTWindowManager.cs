@@ -23,7 +23,10 @@ using System.Text;
 using System.Windows.Forms;
 using Microsoft.Win32;
 using QTPlugin;
-using QTPlugin.Interop;
+
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTPluginLib;
+
 
 namespace QuizoPlugins {
    // [Plugin(PluginType.Background, Author = "Quizo", Name = "QT Window Manager", Version = "1.1.0.0", Description = "Window manager")]

@@ -25,6 +25,9 @@ using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using QTTabBarLib.Interop;
 
+using BandObjectLib.Interop;
+
+
 namespace QTTabBarLib {
     internal sealed class TabSwitchForm : Form {
         private IContainer components;

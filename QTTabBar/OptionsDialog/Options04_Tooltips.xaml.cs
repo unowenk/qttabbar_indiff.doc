@@ -27,6 +27,10 @@ using System.Windows.Input;
 using QTTabBarLib.Interop;
 using Image = System.Drawing.Image;
 
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTTabBar;
+
+
 namespace QTTabBarLib {
     internal partial class Options04_Tooltips : OptionsDialogTab {
         private ObservableCollection<FileTypeEntry> TextFileTypes;

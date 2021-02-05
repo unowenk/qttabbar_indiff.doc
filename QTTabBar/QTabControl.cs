@@ -23,6 +23,10 @@ using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using QTTabBarLib.Interop;
 
+
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTTabBar;
+
 namespace QTTabBarLib {
     internal sealed class QTabControl : Control
     {

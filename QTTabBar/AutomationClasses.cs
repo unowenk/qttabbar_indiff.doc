@@ -23,6 +23,10 @@ using System.Threading;
 using System.Windows.Threading;
 using QTTabBarLib.Interop;
 
+
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTTabBar;
+
 namespace QTTabBarLib {
     // All interaction with AutomationElements MUST be done in a thread other
     // than the UI thread.  Use this class to execute code in the Automation 

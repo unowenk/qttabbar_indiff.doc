@@ -26,6 +26,10 @@ using System.Windows.Forms;
 using BandObjectLib;
 using QTTabBarLib.Interop;
 
+
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTTabBar;
+
 namespace QTTabBarLib {
     class ShellContextMenu : IDisposable {
         private IContextMenu2 pIContextMenu2;

@@ -21,7 +21,11 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using QTPlugin;
-using QTPlugin.Interop;
+
+
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTPluginLib;
+
 
 namespace QuizoPlugins {
     internal static class FileOps {

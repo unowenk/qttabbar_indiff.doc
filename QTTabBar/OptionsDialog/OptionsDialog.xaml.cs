@@ -42,6 +42,9 @@ using System.IO;
 using System.Text;
 
 
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTTabBar;
+
 namespace QTTabBarLib {
     /// <summary>
     /// Interaction logic for OptionsDialog.xaml

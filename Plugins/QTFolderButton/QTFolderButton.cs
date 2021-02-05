@@ -20,7 +20,11 @@ using System.Drawing;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using QTPlugin;
-using QTPlugin.Interop;
+
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTPluginLib;
+
+
 
 namespace QuizoPlugins {
    // [Plugin(PluginType.Background, Author = "Quizo", Name = "FolderTreeButton", Version = "1.0.0.0", Description = "Show folder tree for XP")]

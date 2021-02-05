@@ -33,6 +33,8 @@ using Microsoft.Win32;
 using QTPlugin;
 using QTTabBarLib.Interop;
 
+using BandObjectLib.Interop;
+
 namespace QTTabBarLib {
     internal static class QTUtility {
         internal static readonly Version BetaRevision = new Version(0, 3);

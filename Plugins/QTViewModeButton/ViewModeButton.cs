@@ -20,7 +20,11 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using QTPlugin;
-using QTPlugin.Interop;
+
+
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTPluginLib;
+
 
 namespace QuizoPlugins {
     //[Plugin(PluginType.Interactive, Author = "Quizo", Name = "Change Folder View Mode", Version = "1.0.0.0", Description = "Button to change folder viewmode for XP.")]
@@ -146,10 +150,10 @@ namespace QuizoPlugins {
                     IFolderView folderView = shellView as IFolderView;
 
                     if(folderView != null) {
-                        FOLDERVIEWMODE currentMode = 0;
+                        FVM currentMode = 0;
                         folderView.GetCurrentViewMode(ref currentMode);
 
-                        FOLDERVIEWMODE mode = fvmw.ViewMode;
+                        FVM mode = fvmw.ViewMode;
 
                         if(currentMode != mode) {
                             folderView.SetCurrentViewMode(mode);
@@ -167,14 +171,14 @@ namespace QuizoPlugins {
         }
 
 
-        private FOLDERVIEWMODE GetCurrentViewMode() {
+        private FVM GetCurrentViewMode() {
             IShellView shellView = null;
             try {
                 if(0 == shellBrowser.QueryActiveShellView(out shellView)) {
                     IFolderView folderView = shellView as IFolderView;
 
                     if(folderView != null) {
-                        FOLDERVIEWMODE currentMode = 0;
+                        FVM currentMode = 0;
                         folderView.GetCurrentViewMode(ref currentMode);
 
                         return currentMode;
@@ -188,7 +192,7 @@ namespace QuizoPlugins {
                     Marshal.ReleaseComObject(shellView);
             }
 
-            return FOLDERVIEWMODE.FVM_ICON;
+            return FVM.ICON;
         }
 
         /// <summary>
@@ -196,29 +200,29 @@ namespace QuizoPlugins {
         /// –ﬁ∏¥∆§∑Ù≈‰÷√ø’Õº∆¨±®¥Ì
         /// </summary>
         /// <param name="mode"></param>
-        private void UpdateButtonImage(FOLDERVIEWMODE mode) {
+        private void UpdateButtonImage(FVM mode) {
             switch(mode) {
-                case FOLDERVIEWMODE.FVM_THUMBSTRIP:
+                case FVM.THUMBSTRIP:
                     if ( null != Resource.imgFilm )
                      button.Image = Resource.imgFilm;
                     break;
-                case FOLDERVIEWMODE.FVM_THUMBNAIL:
+                case FVM.THUMBNAIL:
                     if (null != Resource.imgThumb) 
                         button.Image = Resource.imgThumb;
                     break;
-                case FOLDERVIEWMODE.FVM_TILE:
+                case FVM.TILE:
                     if (null != Resource.imgTiles)
                         button.Image = Resource.imgTiles;
                     break;
-                case FOLDERVIEWMODE.FVM_ICON:
+                case FVM.ICON:
                     if (null != Resource.imgIcon)
                         button.Image = Resource.imgIcon;
                     break;
-                case FOLDERVIEWMODE.FVM_LIST:
+                case FVM.LIST:
                     if (null != Resource.imgList)
                         button.Image = Resource.imgList;
                     break;
-                case FOLDERVIEWMODE.FVM_DETAILS:
+                case FVM.DETAILS:
                     if (null != Resource.imgDetails)
                         button.Image = Resource.imgDetails;
                     break;

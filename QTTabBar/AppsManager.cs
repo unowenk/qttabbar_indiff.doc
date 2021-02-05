@@ -28,6 +28,10 @@ using Microsoft.Win32;
 using QTPlugin;
 using QTTabBarLib.Interop;
 
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTTabBar;
+
+
 namespace QTTabBarLib {
     internal sealed class UserApp {
         public string Name;

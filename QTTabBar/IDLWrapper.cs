@@ -26,6 +26,11 @@ using Microsoft.Win32;
 using QTPlugin;
 using QTTabBarLib.Interop;
 
+
+
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTTabBar;
+
 namespace QTTabBarLib {
     public sealed class IDLWrapper : IDisposable {
         private uint attributes;

@@ -29,6 +29,10 @@ using System.Windows.Forms;
 using Microsoft.Win32;
 using QTTabBarLib.Interop;
 
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTTabBar;
+
+
 namespace QTTabBarLib {
     internal sealed class FileHashComputerForm : Form {
         private Button btnClear;

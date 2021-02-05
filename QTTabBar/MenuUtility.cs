@@ -24,6 +24,9 @@ using System.Linq;
 using System.Windows.Forms;
 using QTTabBarLib.Interop;
 
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTTabBar;
+
 namespace QTTabBarLib {
     internal static class MenuUtility {
         private static Font StartUpTabFont;

@@ -26,6 +26,8 @@ using System.Windows.Forms;
 using BandObjectLib;
 using QTTabBarLib.Interop;
 
+using BandObjectLib.Interop;
+
 namespace QTTabBarLib {
     class TrayIcon {
         private struct Instance {

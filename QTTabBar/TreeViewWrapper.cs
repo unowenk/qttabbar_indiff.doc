@@ -21,6 +21,10 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using QTTabBarLib.Interop;
 
+
+using BandObjectLib.Interop;
+using BandObjectLib.Interop.QTTabBar;
+
 namespace QTTabBarLib {
     class TreeViewWrapper : IDisposable {
         public delegate void TreeViewMiddleClickedHandler(IShellItem item);
@@ -47,7 +51,7 @@ namespace QTTabBarLib {
                 IntPtr wParam = PInvoke.SendMessage(treeController.Handle, 0x1111, IntPtr.Zero, ref structure);
                 if(wParam != IntPtr.Zero) {
                     if((structure.flags & 0x10) == 0 && (structure.flags & 0x80) == 0) {
-                        treeControl.HitTest(pt, out item);
+                        treeControl.HitTest(ref pt, out item);
                         if(item != null) {
                             IntPtr pidl;
                             if(PInvoke.SHGetIDListFromObject(item, out pidl) == 0) {
