@@ -30,8 +30,8 @@
     <?define Manufacturer="indiff"?>
     <?define ProductCode="*"?>
     <?define StrongName="QTTabBar, Version=1.0.0.0, Culture=neutral, PublicKeyToken=973461f1cd23d8eb"?>
-    <?define MyLanguage="1033"?>  
-    <!-- Language code page 1252 1033
+    <?define MyLanguage="1033"?>
+	<!-- Language code page 1252 1033
       语言                              语言-国家     Language      Codepage
 English                            en-us             1033               1252
 Simplified Chinese            zh-cn              2052               936
@@ -57,7 +57,7 @@ Language="1033"
             <UpgradeVersion Minimum="$(var.ProductVersion)" IncludeMinimum="no" OnlyDetect="yes" Property="NEWPRODUCTFOUND" />
             <UpgradeVersion Minimum="$(var.RTMProductVersion)" IncludeMinimum="yes" OnlyDetect="no" Maximum="$(var.ProductVersion)" IncludeMaximum="no" Property="UPGRADEFOUND" />
         </Upgrade>
-        <Binary Id="InstallerHelper" SourceFile="..\InstallerHelper\bin\Release\InstallerHelper.dll" />
+        <Binary Id="InstallerHelper" SourceFile="..\InstallerHelper\bin\$(var.Configuration)\InstallerHelper.dll" />
         <PropertyRef Id="NETFRAMEWORK35"/>
         <PropertyRef Id="NETFRAMEWORK40CLIENT"/>
         
@@ -66,66 +66,66 @@ Language="1033"
                 <Directory Id="INSTALLLOCATION" Name="$(var.SkuName)">
                     <!-- Files -->
                     <Component Id="ShellLibrary" Guid="27af1a85-9a01-4c79-bdeb-d73fd4bd9574" Win64="yes" DisableRegistryReflection="yes">
-                        <File Id="f1" Assembly=".net" KeyPath="yes" Name="Interop.SHDocVw.dll" Source="..\BandObjectLib\bin\Release\Interop.SHDocVw.dll">
+                        <File Id="f1" Assembly=".net" KeyPath="yes" Name="Interop.SHDocVw.dll" Source="..\BandObjectLib\bin\$(var.Configuration)\Interop.SHDocVw.dll">
                             <netfx:NativeImage Id="ngen_Interop.SHDocVw.dll" Priority="0" Platform="all" />
                         </File>
                     </Component>
                     <Component Id="BandObjectLib" Guid="27af1a85-9a02-4c79-bdeb-d73fd4bd9574"  Win64="yes" DisableRegistryReflection="yes">
-                        <File Id="f2" Assembly=".net" KeyPath="yes" Name="BandObjectLib.dll" Source="..\BandObjectLib\bin\Release\BandObjectLib.dll">
+                        <File Id="f2" Assembly=".net" KeyPath="yes" Name="BandObjectLib.dll" Source="..\BandObjectLib\bin\$(var.Configuration)\BandObjectLib.dll">
                             <netfx:NativeImage Id="ngen_BandObjectLib.dll" Priority="0" Platform="all" />
                         </File>
                     </Component>
                     <Component Id="QTPluginLib" Guid="27af1a85-9a03-4c79-bdeb-d73fd4bd9574"  Win64="yes" DisableRegistryReflection="yes">
-                        <File Id="f3" Assembly=".net" KeyPath="yes" Name="QTPluginLib.dll" Source="..\QTPluginLib\bin\Release\QTPluginLib.dll">
+                        <File Id="f3" Assembly=".net" KeyPath="yes" Name="QTPluginLib.dll" Source="..\QTPluginLib\bin\$(var.Configuration)\QTPluginLib.dll">
                             <netfx:NativeImage Id="ngen_QTPluginLib.dll" Priority="0" Platform="all" />
                         </File>
                     </Component>
                     <Component Id="QTTabBar" Guid="27af1a85-9a04-4c79-bdeb-d73fd4bd9574"  Win64="yes" DisableRegistryReflection="yes">
-                        <File Id="f4" Assembly=".net" KeyPath="yes" Name="QTTabBar.dll" Source="..\QTTabBar\bin\Release\QTTabBar.dll">
+                        <File Id="f4" Assembly=".net" KeyPath="yes" Name="QTTabBar.dll" Source="..\QTTabBar\bin\$(var.Configuration)\QTTabBar.dll">
                             <netfx:NativeImage Id="ngen_QTTabBar.dll" Priority="0" Platform="all" />
                         </File>
                     </Component>
                   <Component Id="HookLibrary32" Win64="yes" Guid="27af1a85-9a06-4c79-bdeb-d73fd4bd9574" DisableRegistryReflection="yes">
-                    <File Id="f5" Name="QTHookLib32.dll" Source="..\QTHookLib\bin\Release\QTHookLib32.dll" KeyPath="yes" />
+                    <File Id="f5" Name="QTHookLib32.dll" Source="..\QTHookLib\bin\$(var.Configuration)\QTHookLib32.dll" KeyPath="yes" />
                   </Component>
                   <Component Id="HookLibrary64" Win64="yes" Guid="27af1a85-9a07-4c79-bdeb-d73fd4bd9574" DisableRegistryReflection="yes">
-                    <File Id="f6" Name="QTHookLib64.dll" Source="..\QTHookLib\bin\Release\QTHookLib64.dll" KeyPath="yes" />
+                    <File Id="f6" Name="QTHookLib64.dll" Source="..\QTHookLib\bin\$(var.Configuration)\QTHookLib64.dll" KeyPath="yes" />
                   </Component>
 
                   <!-- Add by qwop start -->
                   <Component Id="QTQuick" Win64="yes" Guid="27af1a85-9a08-4c07-bdeb-d73fd4bd9574" DisableRegistryReflection="yes">
-                    <File Id="f7" Name="QTQuick.dll" Source="..\Plugins\QTQuick\bin\Release\QTQuick.dll" KeyPath="yes" />
+                    <File Id="f7" Name="QTQuick.dll" Source="..\Plugins\QTQuick\bin\$(var.Configuration)\QTQuick.dll" KeyPath="yes" />
                   </Component>
                   <Component Id="TurnOffRepeat" Win64="yes" Guid="27af1a85-9a08-4c08-bdeb-d73fd4bd9574" DisableRegistryReflection="yes">
-                    <File Id="f8" Name="TurnOffRepeat.dll" Source="..\Plugins\TurnOffRepeat\bin\Release\TurnOffRepeat.dll" KeyPath="yes" />
+                    <File Id="f8" Name="TurnOffRepeat.dll" Source="..\Plugins\TurnOffRepeat\bin\$(var.Configuration)\TurnOffRepeat.dll" KeyPath="yes" />
                   </Component>
                   <Component Id="CreateNewItem" Win64="yes" Guid="27af1a85-9a08-4c09-bdeb-d73fd4bd9574" DisableRegistryReflection="yes">
-                    <File Id="f9" Name="CreateNewItem.dll" Source="..\Plugins\CreateNewItem\bin\Release\CreateNewItem.dll" KeyPath="yes" />
+                    <File Id="f9" Name="CreateNewItem.dll" Source="..\Plugins\CreateNewItem\bin\$(var.Configuration)\CreateNewItem.dll" KeyPath="yes" />
                   </Component>
                   <Component Id="Memo" Win64="yes" Guid="27af1a85-9a08-4c10-bdeb-d73fd4bd9574" DisableRegistryReflection="yes">
-                    <File Id="f10" Name="Memo.dll" Source="..\Plugins\Memo\bin\Release\Memo.dll" KeyPath="yes" />
+                    <File Id="f10" Name="Memo.dll" Source="..\Plugins\Memo\bin\$(var.Configuration)\Memo.dll" KeyPath="yes" />
                   </Component>
                   <Component Id="MigemoLoader" Win64="yes" Guid="27af1a85-9a08-4c11-bdeb-d73fd4bd9574" DisableRegistryReflection="yes">
-                    <File Id="f11" Name="MigemoLoader.dll" Source="..\Plugins\MigemoLoader\bin\Release\MigemoLoader.dll" KeyPath="yes" />
+                    <File Id="f11" Name="MigemoLoader.dll" Source="..\Plugins\MigemoLoader\bin\$(var.Configuration)\MigemoLoader.dll" KeyPath="yes" />
                   </Component>
 				          <Component Id="QTClock" Win64="yes" Guid="27af1a85-9a08-4c12-bdeb-d73fd4bd9574" DisableRegistryReflection="yes">
-                    <File Id="f12" Name="QTClock.dll" Source="..\Plugins\QTClock\bin\Release\QTClock.dll" KeyPath="yes" />
+                    <File Id="f12" Name="QTClock.dll" Source="..\Plugins\QTClock\bin\$(var.Configuration)\QTClock.dll" KeyPath="yes" />
                   </Component>
 
                   <Component Id="QTWindowManager" Win64="yes" Guid="27af1a85-9a08-4c13-bdeb-d73fd4bd9574" DisableRegistryReflection="yes">
-                    <File Id="f13" Name="QTWindowManager.dll" Source="..\Plugins\QTWindowManager\bin\Release\QTWindowManager.dll" KeyPath="yes" />
+                    <File Id="f13" Name="QTWindowManager.dll" Source="..\Plugins\QTWindowManager\bin\$(var.Configuration)\QTWindowManager.dll" KeyPath="yes" />
                   </Component>
 
                   <Component Id="QTFileTools" Win64="yes" Guid="27af1a85-9a08-4c14-bdeb-d73fd4bd9574" DisableRegistryReflection="yes">
-                    <File Id="f14" Name="QTFileTools.dll" Source="..\Plugins\QTFileTools\bin\Release\QTFileTools.dll" KeyPath="yes" />
+                    <File Id="f14" Name="QTFileTools.dll" Source="..\Plugins\QTFileTools\bin\$(var.Configuration)\QTFileTools.dll" KeyPath="yes" />
                   </Component>
 
                   <Component Id="FolderTreeButton" Win64="yes" Guid="27af1a85-9a08-4c15-bdeb-d73fd4bd9574" DisableRegistryReflection="yes">
-                    <File Id="f15" Name="FolderTreeButton.dll" Source="..\Plugins\QTFolderButton\bin\Release\FolderTreeButton.dll" KeyPath="yes" />
+                    <File Id="f15" Name="FolderTreeButton.dll" Source="..\Plugins\QTFolderButton\bin\$(var.Configuration)\FolderTreeButton.dll" KeyPath="yes" />
                   </Component>
 
                   <Component Id="QTViewModeButton" Win64="yes" Guid="27af1a85-9a08-4c16-bdeb-d73fd4bd9574" DisableRegistryReflection="yes">
-                    <File Id="f16" Name="QTViewModeButton.dll" Source="..\Plugins\QTViewModeButton\bin\Release\QTViewModeButton.dll" KeyPath="yes" />
+                    <File Id="f16" Name="QTViewModeButton.dll" Source="..\Plugins\QTViewModeButton\bin\$(var.Configuration)\QTViewModeButton.dll" KeyPath="yes" />
                   </Component>
                   <!--
                   <Component Id="SampleSplitButton" Win64="yes" Guid="27af1a85-9a08-4c17-bdeb-d73fd4bd9574" DisableRegistryReflection="yes">
@@ -133,7 +133,7 @@ Language="1033"
                   </Component> -->
 
                   <Component Id="ShowStatusBar" Win64="yes" Guid="27af1a85-9a08-4c18-bdeb-d73fd4bd9574" DisableRegistryReflection="yes">
-                    <File Id="f18" Name="ShowStatusBar.dll" Source="..\Plugins\ShowStatusBar\bin\Release\ShowStatusBar.dll" KeyPath="yes" />
+                    <File Id="f18" Name="ShowStatusBar.dll" Source="..\Plugins\ShowStatusBar\bin\$(var.Configuration)\ShowStatusBar.dll" KeyPath="yes" />
                   </Component>
 
 
@@ -281,7 +281,8 @@ Language="1033"
         <CustomAction Id="FailOldVersion1" Error="!(loc.DETECTED_OLD_VERSION)" />
         <CustomAction Id="FailOldVersion2" Error="!(loc.STILL_OLD_VERSION)" />
         <CustomAction Id="SetRuntime4" Property="RUNTIMEVERSION" Value="v4.0.30319" />
-        <CustomAction Id="SetRuntimeNot4" Property="RUNTIMEVERSION" Value="v2.0.50727" />
+        <!-- <CustomAction Id="SetRuntimeNot4" Property="RUNTIMEVERSION" Value="v2.0.50727" /> -->
+        <CustomAction Id="SetRuntimeNot4" Property="RUNTIMEVERSION" Value="v4.0.30319" />
         
         <Condition Message="!(loc.REQUIRE_NET_FRAMEWORK)">
             <![CDATA[Installed OR NETFRAMEWORK35 OR NETFRAMEWORK40CLIENT]]>
