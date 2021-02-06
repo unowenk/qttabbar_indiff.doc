@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.6\build\Microsoft.CodeAnalysis.VersionCheckAnalyzer.props" Condition="Exists('..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.6\build\Microsoft.CodeAnalysis.VersionCheckAnalyzer.props')" />
   <Import Project="..\packages\PropertyChanged.Fody.3.3.1\build\PropertyChanged.Fody.props" Condition="Exists('..\packages\PropertyChanged.Fody.3.3.1\build\PropertyChanged.Fody.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -164,7 +163,9 @@
       <DependentUpon>Options01_Window.xaml</DependentUpon>
     </Compile>
     <Compile Include="PluginManager.cs" />
-    <Compile Include="PluginServer.cs" />
+    <Compile Include="PluginServer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -182,7 +183,9 @@
     <Compile Include="FileFolderEntryBox.xaml.cs">
       <DependentUpon>FileFolderEntryBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FolderBrowserDialogEx.cs" />
+    <Compile Include="FolderBrowserDialogEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="GroupsManager.cs" />
     <Compile Include="HookLibManager.cs" />
     <Compile Include="MarginCombo.xaml.cs">
@@ -211,14 +214,26 @@
     <Compile Include="TrayIcon.cs" />
     <Compile Include="TreeViewWrapper.cs" />
     <Compile Include="ShellBrowserEx.cs" />
-    <Compile Include="CreateNewGroupForm.cs" />
-    <Compile Include="DataGridViewEx.cs" />
-    <Compile Include="DropDownMenuBase.cs" />
-    <Compile Include="DropDownMenuDropTarget.cs" />
-    <Compile Include="DropDownMenuReorderable.cs" />
+    <Compile Include="CreateNewGroupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataGridViewEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DropDownMenuBase.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DropDownMenuDropTarget.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DropDownMenuReorderable.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ExtendedItemsView.cs" />
     <Compile Include="ExtendedSysListView32.cs" />
-    <Compile Include="FileHashComputerForm.cs" />
+    <Compile Include="FileHashComputerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FindFile.cs" />
     <Compile Include="Delegates.cs" />
     <Compile Include="IDLWrapper.cs" />
@@ -230,28 +245,52 @@
     <Compile Include="ListViewMonitor.cs" />
     <Compile Include="ExtendedListViewCommon.cs" />
     <Compile Include="MemoForm.cs" />
-    <Compile Include="MenuItemEx.cs" />
+    <Compile Include="MenuItemEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="MenuUtility.cs" />
-    <Compile Include="MessageForm.cs" />
+    <Compile Include="MessageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="NativeWindowController.cs" />
     <Compile Include="UniqueList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QMenuItem.cs" />
-    <Compile Include="QTabControl.cs" />
+    <Compile Include="QMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="QTabItem.cs" />
-    <Compile Include="QTButtonBar.cs" />
-    <Compile Include="QTDesktopTool.cs" />
-    <Compile Include="QTTabBarClass.cs" />
+    <Compile Include="QTButtonBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="QTDesktopTool.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="QTTabBarClass.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="QTUtility.cs" />
     <Compile Include="QTUtility2.cs" />
-    <Compile Include="SubDirTipForm.cs" />
-    <Compile Include="TabSwitchForm.cs" />
-    <Compile Include="ThumbnailTooltipForm.cs" />
-    <Compile Include="ToolStripClasses.cs" />
+    <Compile Include="SubDirTipForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TabSwitchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ThumbnailTooltipForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ToolStripClasses.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="TxtEnc.cs" />
     <Compile Include="WPFUtils.cs" />
     <Compile Include="UpdateChecker.cs" />
-    <Compile Include="UpDown.cs" />
+    <Compile Include="UpDown.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="WindowUtils.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
@@ -620,10 +659,6 @@
   <ItemGroup>
     <Folder Include="quizo\" />
   </ItemGroup>
-  <ItemGroup>
-    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.6\analyzers\dotnet\cs\Microsoft.CodeAnalysis.VersionCheckAnalyzer.resources.dll" />
-    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.6\analyzers\dotnet\Microsoft.CodeAnalysis.VersionCheckAnalyzer.dll" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -641,6 +676,7 @@
       <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\PropertyChanged.Fody.3.3.1\build\PropertyChanged.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PropertyChanged.Fody.3.3.1\build\PropertyChanged.Fody.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.6\build\Microsoft.CodeAnalysis.VersionCheckAnalyzer.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.6\build\Microsoft.CodeAnalysis.VersionCheckAnalyzer.props'))" />
+    <Error Condition="!Exists('..\packages\Fody.6.3.0\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.6.3.0\build\Fody.targets'))" />
   </Target>
+  <Import Project="..\packages\Fody.6.3.0\build\Fody.targets" Condition="Exists('..\packages\Fody.6.3.0\build\Fody.targets')" />
 </Project>

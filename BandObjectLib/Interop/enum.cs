@@ -165,4 +165,16 @@ namespace BandObjectLib.Interop
         REDIRECT = 0x40000000,
         INITIATEDBYHLINKFRAME = 0x80000000,
     }
+
+
+    public static class FVO
+    {
+        public const int DEFAULT = 0x00;
+        public const int VISTALAYOUT = 0x01;
+        public const int CUSTOMPOSITION = 0x02;
+        public const int CUSTOMORDERING = 0x04;
+        public const int SUPPORTHYPERLINKS = 0x08;
+        public const int NOANIMATIONS = 0x10;
+        public const int NOSCROLLTIPS = 0x20;
+    }
 }

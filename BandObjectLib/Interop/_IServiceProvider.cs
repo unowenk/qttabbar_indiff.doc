@@ -31,30 +31,6 @@ namespace BandObjectLib.Interop
 
 
 
-    //OneCoreCommonProxyStub.dll/IServiceProvider.PSFactoryBuffer
-    [ComImport, Guid("6d5140c1-7436-11ce-8034-00aa006009fa"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown), SuppressUnmanagedCodeSecurity]
-    public interface _IServiceProvider {
-        void QueryService(
-                [In, MarshalAs(UnmanagedType.LPStruct)] Guid guid,
-                [In, MarshalAs(UnmanagedType.LPStruct)] Guid riid,
-                [MarshalAs(UnmanagedType.Interface)] out object Obj);
-    }
-
-    //combase.dll/IDropTarget.PSFactoryBuffer
-    [ComImport, Guid("00000122-0000-0000-C000-000000000046"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown), SuppressUnmanagedCodeSecurity]
-    public interface _IDropTarget
-    {
-        [PreserveSig]
-        int DragEnter(IDataObject pDataObj, int grfKeyState, Point pt, ref DragDropEffects pdwEffect);
-        [PreserveSig]
-        int DragOver(int grfKeyState, Point pt, ref DragDropEffects pdwEffect);
-        [PreserveSig]
-        int DragLeave();
-        [PreserveSig]
-        int DragDrop(IDataObject pDataObj, int grfKeyState, Point pt, ref DragDropEffects pdwEffect);
-    }
-
-
     public abstract class ExplorerGUIDs
     {
         //OneCoreUAPCommonProxyStub.dll/IDeskBand.PSFactoryBuffer
@@ -93,6 +69,34 @@ namespace BandObjectLib.Interop
     }
 
 
+    //combase.dll/IDropTarget.PSFactoryBuffer
+    [ComImport, Guid("00000122-0000-0000-C000-000000000046"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown), SuppressUnmanagedCodeSecurity]
+    public interface _IDropTarget
+    {
+        [PreserveSig]
+        int DragEnter(IDataObject pDataObj, int grfKeyState, Point pt, ref DragDropEffects pdwEffect);
+        [PreserveSig]
+        int DragOver(int grfKeyState, Point pt, ref DragDropEffects pdwEffect);
+        [PreserveSig]
+        int DragLeave();
+        [PreserveSig]
+        int DragDrop(IDataObject pDataObj, int grfKeyState, Point pt, ref DragDropEffects pdwEffect);
+    }
+
+    //combase.dll\IPersistStream.PSFactoryBuffer
+    [ComImport, Guid("00000109-0000-0000-C000-000000000046"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown), SuppressUnmanagedCodeSecurity]
+    public interface IPersistStream
+    {
+        void GetClassID(out Guid pClassID);
+        [PreserveSig]
+        int IsDirty();
+        void IPersistStreamLoad([In, MarshalAs(UnmanagedType.Interface)] object pStm);
+        void Save([In, MarshalAs(UnmanagedType.Interface)] IntPtr pStm, [In, MarshalAs(UnmanagedType.Bool)] bool fClearDirty);
+        [PreserveSig]
+        int GetSizeMax(out ulong pcbSize);
+    }
+
+
 
 
     //null
@@ -108,6 +112,18 @@ namespace BandObjectLib.Interop
         int HandleMenuMsg(int uMsg, IntPtr wParam, IntPtr lParam);
     }
 
+    //null
+    [ComImport, Guid("00021500-0000-0000-c000-000000000046"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown), SuppressUnmanagedCodeSecurity]
+    public interface IQueryInfo
+    {
+        [PreserveSig]
+        int GetInfoTip(int dwFlags, [MarshalAs(UnmanagedType.LPWStr)] out string ppwszTip);
+        [PreserveSig]
+        int GetInfoFlags(out IntPtr pdwFlags);
+    }
+
+
+
     //ActXPrxy.dll/IDeskBand2.PSFactoryBuffer
     [ComImport, SuppressUnmanagedCodeSecurity, Guid("79D16DE4-ABEE-4021-8D9D-9169B261D657"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IDeskBand2
@@ -122,6 +138,91 @@ namespace BandObjectLib.Interop
         void SetCompositionState(bool fCompositionEnabled);
         void GetCompositionState(out bool pfCompositionEnabled);
     }
+
+
+    //ActXPrxy.dll\IEnumTravelLogEntry.PSFactoryBuffer
+    [ComImport, Guid("7EBFDD85-AD18-11d3-A4C5-00C04F72D6B8"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown), SuppressUnmanagedCodeSecurity]
+    public interface IEnumTravelLogEntry
+    {
+        [PreserveSig]
+        int Next([In] uint cElt, [MarshalAs(UnmanagedType.Interface)] out ITravelLogEntry rgElt, [Out] uint pcEltFetched);
+        [PreserveSig]
+        int Skip([In] uint cElt);
+        [PreserveSig]
+        int Reset();
+        [PreserveSig]
+        int Clone([MarshalAs(UnmanagedType.Interface)] out IEnumTravelLogEntry ppEnum);
+    }
+
+
+    //ActXPrxy.dll\IFolderViewOptions.PSFactoryBuffer
+    [ComImport, SuppressUnmanagedCodeSecurity, Guid("3cc974d2-b302-4d36-ad3e-06d93f695d3f"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    public interface IFolderViewOptions
+    {
+        [PreserveSig]
+        int SetFolderViewOptions(int fvoMask, int fvoFlags);
+        [PreserveSig]
+        int GetFolderViewOptions(out int pfvoFlags);
+    }
+
+
+
+    //ActXPrxy.dll\ITravelLogEntry.PSFactoryBuffer
+    [ComImport, Guid("7EBFDD87-AD18-11d3-A4C5-00C04F72D6B8"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown), SuppressUnmanagedCodeSecurity]
+    public interface ITravelLogEntry
+    {
+        [PreserveSig]
+        int GetTitle(out IntPtr ppszTitle);
+        [PreserveSig]
+        int GetURL(out IntPtr ppszURL);
+    }
+    //ActXPrxy.dll\ITravelLogStg.PSFactoryBuffer
+    [ComImport, Guid("7EBFDD80-AD18-11d3-A4C5-00C04F72D6B8"), SuppressUnmanagedCodeSecurity, InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    public interface ITravelLogStg
+    {
+        [PreserveSig]
+        int CreateEntry([In, MarshalAs(UnmanagedType.BStr)] string pszUrl, [In, MarshalAs(UnmanagedType.BStr)] string pszTitle, [In, MarshalAs(UnmanagedType.Interface)] ITravelLogEntry ptleRelativeTo, [In] bool fPrepend, [MarshalAs(UnmanagedType.Interface)] out ITravelLogEntry pptle);
+        [PreserveSig]
+        int TravelTo([In, MarshalAs(UnmanagedType.Interface)] ITravelLogEntry ptle);
+        [PreserveSig]
+        int EnumEntries([In] int flags, [MarshalAs(UnmanagedType.Interface)] out IEnumTravelLogEntry ppenum);
+        [PreserveSig]
+        int FindEntries([In] int flags, [In, MarshalAs(UnmanagedType.BStr)] string pszUrl, [MarshalAs(UnmanagedType.Interface)] out IEnumTravelLogEntry ppenum);
+        [PreserveSig]
+        int GetCount([In] int flags, out int pcEntries);
+        [PreserveSig]
+        int RemoveEntry([In, MarshalAs(UnmanagedType.Interface)] ITravelLogEntry ptle);
+        [PreserveSig]
+        int GetRelativeEntry([In] int iOffset, [MarshalAs(UnmanagedType.Interface)] out ITravelLogEntry ptle);
+    }
+
+
+    //ieproxy.dll\IOleCommandTarget.PSFactoryBuffer
+    [ComImport, Guid("B722BCCB-4E68-101B-A2BC-00AA00404770"), SuppressUnmanagedCodeSecurity, InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    public interface IOleCommandTarget
+    {
+        [PreserveSig]
+        int QueryStatus([In] ref Guid pguidCmdGroup, int cCmds, IntPtr prgCmds, IntPtr pCmdText);
+        [PreserveSig]
+        int Exec([In] ref Guid pguidCmdGroup, uint nCmdID, uint nCmdExecOpt, IntPtr pvaIn, IntPtr pvaOut);
+    }
+
+
+
+
+
+
+    //OneCoreCommonProxyStub.dll/IServiceProvider.PSFactoryBuffer
+    [ComImport, Guid("6d5140c1-7436-11ce-8034-00aa006009fa"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown), SuppressUnmanagedCodeSecurity]
+    public interface _IServiceProvider
+    {
+        void QueryService(
+                [In, MarshalAs(UnmanagedType.LPStruct)] Guid guid,
+                [In, MarshalAs(UnmanagedType.LPStruct)] Guid riid,
+                [MarshalAs(UnmanagedType.Interface)] out object Obj);
+    }
+
+
     namespace QTTabBar
     {
         //OneCoreUAPCommonProxyStub.dll\IEnumIDList.PSFactoryBuffer
@@ -150,19 +251,6 @@ namespace BandObjectLib.Interop
             [PreserveSig]
             int Clone(out IEnumIDList ppenum);
         }
-    }
-    //ActXPrxy.dll\IEnumTravelLogEntry.PSFactoryBuffer
-    [ComImport, Guid("7EBFDD85-AD18-11d3-A4C5-00C04F72D6B8"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown), SuppressUnmanagedCodeSecurity]
-    public interface IEnumTravelLogEntry
-    {
-        [PreserveSig]
-        int Next([In] uint cElt, [MarshalAs(UnmanagedType.Interface)] out ITravelLogEntry rgElt, [Out] uint pcEltFetched);
-        [PreserveSig]
-        int Skip([In] uint cElt);
-        [PreserveSig]
-        int Reset();
-        [PreserveSig]
-        int Clone([MarshalAs(UnmanagedType.Interface)] out IEnumTravelLogEntry ppEnum);
     }
     //OneCoreUAPCommonProxyStub.dll\IExtractImage.PSFactoryBuffer
     [ComImport, Guid("BB2E617C-0920-11d1-9A0B-00C04FC2D6C1"), SuppressUnmanagedCodeSecurity, InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
@@ -338,26 +426,7 @@ namespace BandObjectLib.Interop
             int SelectAndPositionItems(uint cidl, IntPtr apidl, IntPtr apt, int dwFlags);
         }
     }
-    //ActXPrxy.dll\IFolderViewOptions.PSFactoryBuffer
-    [ComImport, SuppressUnmanagedCodeSecurity, Guid("3cc974d2-b302-4d36-ad3e-06d93f695d3f"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    public interface IFolderViewOptions
-    {
-        [PreserveSig]
-        int SetFolderViewOptions(int fvoMask, int fvoFlags);
-        [PreserveSig]
-        int GetFolderViewOptions(out int pfvoFlags);
-    }
 
-    public static class FVO
-    {
-        public const int DEFAULT = 0x00;
-        public const int VISTALAYOUT = 0x01;
-        public const int CUSTOMPOSITION = 0x02;
-        public const int CUSTOMORDERING = 0x04;
-        public const int SUPPORTHYPERLINKS = 0x08;
-        public const int NOANIMATIONS = 0x10;
-        public const int NOSCROLLTIPS = 0x20;
-    }
 
     //OneCoreUAPCommonProxyStub.dll\IInputObjectSite.PSFactoryBuffer
     [ComImport, SuppressUnmanagedCodeSecurity, Guid("f1db8392-7331-11d0-8c99-00a0c92dbfe8"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
@@ -410,24 +479,12 @@ namespace BandObjectLib.Interop
         [PreserveSig]
         int CollapseAll();
     }
-    [ComImport, SuppressUnmanagedCodeSecurity, InterfaceType(ComInterfaceType.InterfaceIsIUnknown), Guid("FC4801A3-2BA9-11CF-A229-00AA003D7352")]
-    public interface IObjectWithSite
-    {
-        void SetSite([In, MarshalAs(UnmanagedType.IUnknown)] object pUnkSite);
-        void GetSite(ref Guid riid, [MarshalAs(UnmanagedType.IUnknown)] out object ppvSite);
-    }
-    [ComImport, SuppressUnmanagedCodeSecurity, InterfaceType(ComInterfaceType.InterfaceIsIUnknown), Guid("B722BCCB-4E68-101B-A2BC-00AA00404770")]
-    public interface IOleCommandTarget
-    {
-        [PreserveSig]
-        int QueryStatus([In] ref Guid pguidCmdGroup, int cCmds, IntPtr prgCmds, IntPtr pCmdText);
-        [PreserveSig]
-        int Exec([In] ref Guid pguidCmdGroup, uint nCmdID, uint nCmdExecOpt, IntPtr pvaIn, IntPtr pvaOut);
-    }
+
 
     namespace QTTabBar
     {
-        [ComImport, SuppressUnmanagedCodeSecurity, Guid("1AC3D9F0-175C-11d1-95BE-00609797EA4F"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        //OneCoreUAPCommonProxyStub.dll\IPersistFolder2.PSFactoryBuffer
+        [ComImport, Guid("1AC3D9F0-175C-11d1-95BE-00609797EA4F"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown), SuppressUnmanagedCodeSecurity]
         public interface IPersistFolder2
         {
             void GetClassID(out Guid pClassID);
@@ -439,7 +496,8 @@ namespace BandObjectLib.Interop
 
     namespace QTPluginLib
     {
-        [ComImport, SuppressUnmanagedCodeSecurity, Guid("1AC3D9F0-175C-11d1-95BE-00609797EA4F"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        //OneCoreUAPCommonProxyStub.dll\IPersistFolder2.PSFactoryBuffer
+        [ComImport, Guid("1AC3D9F0-175C-11d1-95BE-00609797EA4F"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown), SuppressUnmanagedCodeSecurity]
         public interface IPersistFolder2
         {
             [PreserveSig]
@@ -451,26 +509,8 @@ namespace BandObjectLib.Interop
         }
     }
 
-    [ComImport, Guid("00000109-0000-0000-C000-000000000046"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown), SuppressUnmanagedCodeSecurity]
-    public interface IPersistStream
-    {
-        void GetClassID(out Guid pClassID);
-        [PreserveSig]
-        int IsDirty();
-        void IPersistStreamLoad([In, MarshalAs(UnmanagedType.Interface)] object pStm);
-        void Save([In, MarshalAs(UnmanagedType.Interface)] IntPtr pStm, [In, MarshalAs(UnmanagedType.Bool)] bool fClearDirty);
-        [PreserveSig]
-        int GetSizeMax(out ulong pcbSize);
-    }
-    [ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown), SuppressUnmanagedCodeSecurity, Guid("00021500-0000-0000-c000-000000000046")]
-    public interface IQueryInfo
-    {
-        [PreserveSig]
-        int GetInfoTip(int dwFlags, [MarshalAs(UnmanagedType.LPWStr)] out string ppwszTip);
-        [PreserveSig]
-        int GetInfoFlags(out IntPtr pdwFlags);
-    }
-    [ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown), SuppressUnmanagedCodeSecurity, Guid("091162a4-bc96-411f-aae8-c5122cd03363")]
+    //OneCoreUAPCommonProxyStub.dll\ISharedBitmap.PSFactoryBuffer
+    [ComImport, Guid("091162a4-bc96-411f-aae8-c5122cd03363"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown), SuppressUnmanagedCodeSecurity]
     public interface ISharedBitmap
     {
         [PreserveSig]
@@ -488,6 +528,7 @@ namespace BandObjectLib.Interop
 
     namespace QTTabBar
     {
+        //OneCoreUAPCommonProxyStub.dll\IShellBrowser.PSFactoryBuffer
         [ComImport, Guid("000214E2-0000-0000-C000-000000000046"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown), SuppressUnmanagedCodeSecurity]
         public interface IShellBrowser
         {
@@ -526,6 +567,7 @@ namespace BandObjectLib.Interop
 
     namespace QTPluginLib
     {
+        //OneCoreUAPCommonProxyStub.dll\IShellBrowser.PSFactoryBuffer
         [ComImport, Guid("000214E2-0000-0000-C000-000000000046"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown), SuppressUnmanagedCodeSecurity]
         public interface IShellBrowser
         {
@@ -565,6 +607,7 @@ namespace BandObjectLib.Interop
 
     namespace QTTabBar
     {
+        //OneCoreUAPCommonProxyStub.dll\IShellFolder.PSFactoryBuffer
         [ComImport, SuppressUnmanagedCodeSecurity, Guid("000214E6-0000-0000-C000-000000000046"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         public interface IShellFolder
         {
@@ -593,6 +636,7 @@ namespace BandObjectLib.Interop
 
     namespace QTPluginLib
     {
+        //OneCoreUAPCommonProxyStub.dll\IShellFolder.PSFactoryBuffer
         [ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown), Guid("000214E6-0000-0000-C000-000000000046")]
         public interface IShellFolder
         {
@@ -618,7 +662,7 @@ namespace BandObjectLib.Interop
             int SetNameOf(IntPtr hwndOwner, IntPtr pidl, [MarshalAs(UnmanagedType.LPWStr)] string pszName, uint uFlags, out IntPtr ppidlOut);
         }
 
-
+        //OneCoreUAPCommonProxyStub.dll\IShellFolder2.PSFactoryBuffer
         [ComImport, Guid("93F2F68C-1D1B-11d3-A30E-00C04F79ABD1"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         public interface IShellFolder2
         {
@@ -661,8 +705,8 @@ namespace BandObjectLib.Interop
 
     }
 
-
-    [ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown), Guid("37A378C0-F82D-11CE-AE65-08002B2E1262"), SuppressUnmanagedCodeSecurity]
+    //null
+    [ComImport, Guid("37A378C0-F82D-11CE-AE65-08002B2E1262"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown), SuppressUnmanagedCodeSecurity]
     public interface IShellFolderView
     {
         [PreserveSig]
@@ -701,7 +745,7 @@ namespace BandObjectLib.Interop
         void SetAutomationObject(IntPtr pdisp);
     }
 
-
+    //OneCoreUAPCommonProxyStub.dll\IShellItem.PSFactoryBuffer
     [ComImport, Guid("43826d1e-e718-42ee-bc55-a1e261c37bfe"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown), SuppressUnmanagedCodeSecurity]
     public interface IShellItem
     {
@@ -716,7 +760,8 @@ namespace BandObjectLib.Interop
         [PreserveSig]
         int Compare(IShellItem psi, int hint, out int piOrder);
     }
-    [ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown), SuppressUnmanagedCodeSecurity, Guid("000214F9-0000-0000-C000-000000000046")]
+    //OneCoreUAPCommonProxyStub.dll\IShellLinkW.PSFactoryBuffer
+    [ComImport, Guid("000214F9-0000-0000-C000-000000000046"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown), SuppressUnmanagedCodeSecurity]
     public interface IShellLinkW
     {
         [PreserveSig]
@@ -748,6 +793,7 @@ namespace BandObjectLib.Interop
 
     namespace QTTabBar
     {
+        //OneCoreUAPCommonProxyStub.dll\IShellView.PSFactoryBuffer
         //https://docs.microsoft.com/en-us/previous-versions/aa930086(v=msdn.10)
         [ComImport, Guid("000214E3-0000-0000-C000-000000000046"), SuppressUnmanagedCodeSecurity, InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         public interface IShellView
@@ -771,10 +817,9 @@ namespace BandObjectLib.Interop
             void GetItemObject(uint uItem, ref Guid riid, [MarshalAs(UnmanagedType.IUnknown)] out object ppv);
         }
     }
-
-
     namespace QTPluginLib
     {
+        //OneCoreUAPCommonProxyStub.dll\IShellView.PSFactoryBuffer
         //https://docs.microsoft.com/en-us/previous-versions/aa930086(v=msdn.10)
         [ComImport, Guid("000214E3-0000-0000-C000-000000000046"), SuppressUnmanagedCodeSecurity, InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         public interface IShellView
@@ -807,7 +852,7 @@ namespace BandObjectLib.Interop
             int GetItemObject(uint uItem, ref Guid riid, [MarshalAs(UnmanagedType.IUnknown)] out object ppv);
         }
     }
-
+    //OneCoreUAPCommonProxyStub.dll\ITaskbarList.PSFactoryBuffer
     [ComImport, Guid("56FDF342-FD6D-11d0-958A-006097C9A090"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown), SuppressUnmanagedCodeSecurity]
     public interface ITaskbarList
     {
@@ -822,7 +867,8 @@ namespace BandObjectLib.Interop
         [PreserveSig]
         int SetActiveAlt(IntPtr hwnd);
     }
-    [ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown), SuppressUnmanagedCodeSecurity, Guid("F676C15D-596A-4ce2-8234-33996F445DB1")]
+    //OneCoreUAPCommonProxyStub.dll\IThumbnailCache.PSFactoryBuffer
+    [ComImport, Guid("F676C15D-596A-4ce2-8234-33996F445DB1"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown), SuppressUnmanagedCodeSecurity]
     public interface IThumbnailCache
     {
         [PreserveSig]
@@ -830,32 +876,36 @@ namespace BandObjectLib.Interop
         [PreserveSig]
         int GetThumbnailByID(ref WTS_THUMBNAILID thumbnailID, uint cxyRequestedThumbSize, out ISharedBitmap ppvThumb, ref uint pOutFlags);
     }
-    [ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown), Guid("7EBFDD87-AD18-11d3-A4C5-00C04F72D6B8"), SuppressUnmanagedCodeSecurity]
-    public interface ITravelLogEntry
+
+
+
+
+
+
+
+
+
+    //oleaut32.dll\IObjectWithSite.PSFactoryBuffer
+    [ComImport, Guid("FC4801A3-2BA9-11CF-A229-00AA003D7352"), SuppressUnmanagedCodeSecurity, InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    public interface IObjectWithSite
     {
-        [PreserveSig]
-        int GetTitle(out IntPtr ppszTitle);
-        [PreserveSig]
-        int GetURL(out IntPtr ppszURL);
+        void SetSite([In, MarshalAs(UnmanagedType.IUnknown)] object pUnkSite);
+        void GetSite(ref Guid riid, [MarshalAs(UnmanagedType.IUnknown)] out object ppvSite);
     }
-    [ComImport, Guid("7EBFDD80-AD18-11d3-A4C5-00C04F72D6B8"), SuppressUnmanagedCodeSecurity, InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    public interface ITravelLogStg
+
+    //oleaut32.dll\IUIAutomationRegistrar.PSOAInterface
+    //TypeLib==UIAutomationCore
+    [ComImport, Guid("8609c4ec-4a1a-4d88-a357-5a66e060e1cf"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    public interface IUIAutomationRegistrar
     {
-        [PreserveSig]
-        int CreateEntry([In, MarshalAs(UnmanagedType.BStr)] string pszUrl, [In, MarshalAs(UnmanagedType.BStr)] string pszTitle, [In, MarshalAs(UnmanagedType.Interface)] ITravelLogEntry ptleRelativeTo, [In] bool fPrepend, [MarshalAs(UnmanagedType.Interface)] out ITravelLogEntry pptle);
-        [PreserveSig]
-        int TravelTo([In, MarshalAs(UnmanagedType.Interface)] ITravelLogEntry ptle);
-        [PreserveSig]
-        int EnumEntries([In] int flags, [MarshalAs(UnmanagedType.Interface)] out IEnumTravelLogEntry ppenum);
-        [PreserveSig]
-        int FindEntries([In] int flags, [In, MarshalAs(UnmanagedType.BStr)] string pszUrl, [MarshalAs(UnmanagedType.Interface)] out IEnumTravelLogEntry ppenum);
-        [PreserveSig]
-        int GetCount([In] int flags, out int pcEntries);
-        [PreserveSig]
-        int RemoveEntry([In, MarshalAs(UnmanagedType.Interface)] ITravelLogEntry ptle);
-        [PreserveSig]
-        int GetRelativeEntry([In] int iOffset, [MarshalAs(UnmanagedType.Interface)] out ITravelLogEntry ptle);
+        void RegisterProperty(ref UIAutomationPropertyInfo property, out int propertyId);
+        /* NOT DECLARED */
+        void RegisterEvent();
+        /* NOT DECLARED */
+        void RegisterPattern();
     }
+    //oleaut32.dll\IUIAutomation.PSOAInterface
+    //TypeLib==UIAutomationClient
     [ComImport, Guid("30cbe57d-d9d0-452a-ab13-7ac5ac4825ee"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IUIAutomation
     {
@@ -966,6 +1016,8 @@ namespace BandObjectLib.Interop
         /* NOT DECLARED */
         void ElementFromIAccessibleBuildCache();
     };
+    //oleaut32.dll\IUIAutomationElement.PSOAInterface
+    //TypeLib==UIAutomationClient
     [ComImport, Guid("d22108aa-8ac5-49a5-837b-37bbb3d7591e"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IUIAutomationElement
     {
@@ -1132,6 +1184,8 @@ namespace BandObjectLib.Interop
         /* NOT DECLARED */
         void GetClickablePoint();
     };
+    //oleaut32.dll\IUIAutomationGridPattern.PSOAInterface
+    //TypeLib==UIAutomationClient
     [ComImport, Guid("414c3cdc-856b-4f5b-8538-3131c6302550"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IUIAutomationGridPattern
     {
@@ -1141,15 +1195,8 @@ namespace BandObjectLib.Interop
         void get_CachedRowCount(out int retVal);
         void get_CachedColumnCount(out int retVal);
     }
-    [ComImport, Guid("8609c4ec-4a1a-4d88-a357-5a66e060e1cf"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    public interface IUIAutomationRegistrar
-    {
-        void RegisterProperty(ref UIAutomationPropertyInfo property, out int propertyId);
-        /* NOT DECLARED */
-        void RegisterEvent();
-        /* NOT DECLARED */
-        void RegisterPattern();
-    }
+    //oleaut32.dll\IUIAutomationScrollPattern.PSOAInterface
+    //TypeLib==UIAutomationClient
     [ComImport, Guid("88f4d42a-e881-459d-a77c-73bbbb7e02dc"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IUIAutomationScrollPattern
     {
@@ -1168,6 +1215,8 @@ namespace BandObjectLib.Interop
         void get_CachedHorizontallyScrollable(out bool retVal);
         void get_CachedVerticallyScrollable(out bool retVal);
     }
+    //oleaut32.dll\IUIAutomationSelectionItemPattern.PSOAInterface
+    //TypeLib==UIAutomationClient
     [ComImport, Guid("a8efa66a-0fda-421a-9194-38021f3578ea"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IUIAutomationSelectionItemPattern
     {
@@ -1181,6 +1230,8 @@ namespace BandObjectLib.Interop
         /* NOT DECLARED */
         void get_CachedSelectionContainer();
     }
+    //oleaut32.dll\IUIAutomationTreeWalker.PSOAInterface
+    //TypeLib==UIAutomationClient
     [ComImport, Guid("4042c624-389c-4afc-a630-9df854a541fc"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IUIAutomationTreeWalker
     {
