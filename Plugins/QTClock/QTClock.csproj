@@ -26,7 +26,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>QTClock.ruleset</CodeAnalysisRuleSet>
+    <!--<CodeAnalysisRuleSet>QTClock.ruleset</CodeAnalysisRuleSet>-->
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -35,7 +35,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>QTClock.ruleset</CodeAnalysisRuleSet>
+    <!--<CodeAnalysisRuleSet>QTClock.ruleset</CodeAnalysisRuleSet>-->
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -59,7 +59,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="QTClock.ruleset" />
     <None Include="Resources\img16.png" />
   </ItemGroup>
   <ItemGroup>

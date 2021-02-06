@@ -26,7 +26,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>QTFileTools.ruleset</CodeAnalysisRuleSet>
+    <!--<CodeAnalysisRuleSet>QTFileTools.ruleset</CodeAnalysisRuleSet>-->
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -36,7 +36,7 @@
     </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>QTFileTools.ruleset</CodeAnalysisRuleSet>
+    <!--<CodeAnalysisRuleSet>QTFileTools.ruleset</CodeAnalysisRuleSet>-->
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -61,7 +61,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="QTFileTools.ruleset" />
     <None Include="Resources\imgCopy24.png" />
   </ItemGroup>
   <ItemGroup>
