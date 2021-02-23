@@ -19,19 +19,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using QTTabBarLib.Interop;
-using Image = System.Drawing.Image;
-
-using BandObjectLib.Interop;
 using BandObjectLib.Interop.QTTabBar;
 
 
-namespace QTTabBarLib {
+namespace QTTabBarLib
+{
     internal partial class Options04_Tooltips : OptionsDialogTab {
         private ObservableCollection<FileTypeEntry> TextFileTypes;
         private ObservableCollection<FileTypeEntry> MediaFileTypes;
@@ -125,73 +122,5 @@ namespace QTTabBarLib {
             }
         }
 
-        #region ---------- Binding Classes ----------
-        // INotifyPropertyChanged is implemented automatically by Notify Property Weaver!
-        #pragma warning disable 0067 // "The event 'PropertyChanged' is never used"
-        // ReSharper disable MemberCanBePrivate.Local
-        // ReSharper disable UnusedMember.Local
-        // ReSharper disable UnusedAutoPropertyAccessor.Local
-
-        private class FileTypeEntry : INotifyPropertyChanged, IEditableEntry {
-            public event PropertyChangedEventHandler PropertyChanged;
-            private Options04_Tooltips parent;
-
-            private bool _IsEditing;
-            public bool IsEditing {
-                get { return _IsEditing; }
-                set {
-                    _IsEditing = value;
-                    if(!_IsEditing && string.IsNullOrEmpty(Extension)) {
-                        parent.TextFileTypes.Remove(this);
-                        parent.MediaFileTypes.Remove(this);
-                    }
-                }
-            }
-
-            public bool IsSelected { get; set; }
-            public string Extension { get; set; }
-
-            public string DotExtension {
-                get {
-                    return "." + Extension;
-                }
-                set {
-                    if(!value.StartsWith(".")) {
-                        throw new ArgumentException();
-                    }
-                    Extension = value.Substring(1);
-                }
-            }
-            public string FriendlyName {
-                get {
-                    // PENDING: Instead of something like GetFileType.
-
-                    SHFILEINFO psfi = new SHFILEINFO();
-                    int sz = System.Runtime.InteropServices.Marshal.SizeOf(psfi);
-                    // SHGFI_TYPENAME | SHGFI_USEFILEATTRIBUTES
-                    if(IntPtr.Zero == PInvoke.SHGetFileInfo("*" + DotExtension, 0x80, ref psfi, sz, 0x400 | 0x10)) {
-                        return null;
-                    }
-                    else if(string.IsNullOrEmpty(psfi.szTypeName)) {
-                        return null;
-                    }
-                    return psfi.szTypeName;
-                }
-            }
-            public Image Icon {
-                get {
-                    return QTUtility.GetIcon(DotExtension, true).ToBitmap();
-                }
-            }
-            public FileTypeEntry(Options04_Tooltips parent, string extension) {
-                this.parent = parent;
-                if(!extension.StartsWith(".")) {
-                    extension = "." + extension;
-                }
-                DotExtension = extension;
-            }
-        }
-
-        #endregion
     }
 }

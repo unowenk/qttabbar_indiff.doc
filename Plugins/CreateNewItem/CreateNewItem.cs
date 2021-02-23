@@ -33,11 +33,6 @@ namespace QuizoPlugins {
         private IPluginServer pluginServer;
         private IShellBrowser shellBrowser;
 
-        [DllImport("shell32.dll", CharSet = CharSet.Auto)]
-        private static extern IntPtr ILCreateFromPath([MarshalAs(UnmanagedType.LPTStr)] string pszPath);
-
-        [DllImport("shell32.dll")]
-        private static extern IntPtr ILFindLastID(IntPtr pidl);
 
         #region IPluginClient Members
 
@@ -109,9 +104,9 @@ namespace QuizoPlugins {
                 if(0 == shellBrowser.QueryActiveShellView(out shellView)) {
                     shellView.Refresh();
 
-                    pIDL = ILCreateFromPath(pathNew);
+                    pIDL = PInvoke.ILCreateFromPath(pathNew);
                     if(pIDL != IntPtr.Zero) {
-                        IntPtr pIDLRltv = ILFindLastID(pIDL);
+                        IntPtr pIDLRltv = PInvoke.ILFindLastID(pIDL);
                         if(pIDLRltv != IntPtr.Zero) {
                             shellView.SelectItem(pIDLRltv, SVSI_SELECT | SVSI_DESELECTOTHERS | SVSI_ENSUREVISIBLE | SVSI_EDIT);
                             return;

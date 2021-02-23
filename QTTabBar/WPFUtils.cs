@@ -16,7 +16,6 @@
 //    along with QTTabBar.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.ComponentModel;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,7 +23,8 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Markup;
 
-namespace QTTabBarLib {
+namespace QTTabBarLib
+{
 
     // Universal converters.  This allows us to keep the real converters as
     // nested classes, so we can avoid cluttering up the namespace
@@ -154,7 +154,7 @@ namespace QTTabBarLib {
     }
 
     [MarkupExtensionReturnType(typeof(string))]
-    class Resx : MarkupExtension {
+    partial class Resx : MarkupExtension {
        
         // Use weak events to avoid memory leaks.
         private class ResxEventManager : WeakEventManager {
@@ -178,30 +178,6 @@ namespace QTTabBarLib {
             protected override void StopListening(object source) {
                 OnUpdate -= mHandler;
             }           
-        }
-
-        private class ResxListener : INotifyPropertyChanged, IWeakEventListener {
-            #pragma warning disable 0067 // "The event 'PropertyChanged' is never used"
-            public event PropertyChangedEventHandler PropertyChanged;
-            #pragma warning restore 0067
-
-            // ReSharper disable MemberCanBePrivate.Local
-            // ReSharper disable UnusedAutoPropertyAccessor.Local
-            public string Value { get; set; }
-            // ReSharper restore UnusedAutoPropertyAccessor.Local
-            // ReSharper restore MemberCanBePrivate.Local
-            
-            private Resx parent;
-
-            public ResxListener(Resx parent) {
-                this.parent = parent;
-                Value = parent.GetValue();
-            }
-
-            public bool ReceiveWeakEvent(Type managerType, object sender, EventArgs e) {
-                Value = parent.GetValue();
-                return true;
-            }
         }
 
         private static event EventHandler OnUpdate; 

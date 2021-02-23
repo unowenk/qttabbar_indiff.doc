@@ -27,7 +27,8 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
 
-namespace QTTabBarLib {
+namespace QTTabBarLib
+{
     internal partial class Options07_Mouse : OptionsDialogTab {
 
         #region Dictionaries
@@ -351,65 +352,5 @@ namespace QTTabBarLib {
             ((ComboBox)sender).GetBindingExpression(Selector.SelectedValueProperty).UpdateTarget();
         }
 
-        #region ---------- Binding Classes ----------
-        // INotifyPropertyChanged is implemented automatically by Notify Property Weaver!
-        #pragma warning disable 0067 // "The event 'PropertyChanged' is never used"
-        // ReSharper disable MemberCanBePrivate.Local
-        // ReSharper disable UnusedMember.Local
-        // ReSharper disable UnusedAutoPropertyAccessor.Local
-
-        private class MouseEntry : INotifyPropertyChanged {
-            public event PropertyChangedEventHandler PropertyChanged;
-            private bool isSelected;
-            public bool IsSelected {
-                get {
-                    return isSelected;
-                }
-                set {
-                    isSelected = value;
-                    if(!isSelected) IsEditing = false;
-                }
-            }
-            private bool isEditing;
-            public bool IsEditing {
-                get {
-                    return isEditing;
-                }
-                set {
-                    isEditing = value;
-                    if(isEditing) IsSelected = true;
-                }
-            }
-            public IEnumerable<int> ComboBoxItems {
-                get { return MouseTargetActions[Target].Select(ActionToResx); }
-            }
-            public string GestureModifiers {
-                get {
-                    return new MouseChord[] {MouseChord.Ctrl, MouseChord.Shift, MouseChord.Alt}
-                            .Where(mod => (Chord & mod) == mod)
-                            .Select(c => MouseModifierStrings[c])
-                            .StringJoin("");
-                }
-            }
-            public int ButtonIdx { get {
-                return MouseButtonResx[Chord & ~(MouseChord.Alt | MouseChord.Ctrl | MouseChord.Shift)];
-            }}
-            public int TargetIdx { get { return MouseTargetResx[Target]; } }
-            public MouseTarget Target { get; private set; }
-            public BindAction Action { get; set; }
-            public MouseChord Chord { get; private set; }
-            public int ActionIdx {
-                get { return ActionToResx(Action); }
-                set { Action = ResxToAction(value); }
-            }
-
-            public MouseEntry(MouseTarget target, MouseChord chord, BindAction action) {
-                Target = target;
-                Action = action;
-                Chord = chord;
-            }
-        }
-
-        #endregion
     }
 }

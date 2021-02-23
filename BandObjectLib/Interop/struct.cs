@@ -22,6 +22,71 @@ using System.Runtime.InteropServices;
 namespace BandObjectLib.Interop
 {
 
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct MSG
+    {
+        public IntPtr hwnd;
+        public uint message;
+        public IntPtr wParam;
+        public IntPtr lParam;
+        public uint time;
+        public POINT pt;
+    }
+    [StructLayout(LayoutKind.Sequential)]
+    public struct POINT
+    {
+        public int x;
+        public int y;
+        public POINT(Point pnt)
+        {
+            x = pnt.X;
+            y = pnt.Y;
+        }
+
+        public Point ToPoint()
+        {
+            return new Point(x, y);
+        }
+    }
+    [StructLayout(LayoutKind.Sequential)]
+    public struct RECT
+    {
+        public int left;
+        public int top;
+        public int right;
+        public int bottom;
+        public RECT(Rectangle rectangle)
+        {
+            left = rectangle.X;
+            top = rectangle.Y;
+            right = rectangle.Right;
+            bottom = rectangle.Bottom;
+        }
+
+        public int Width
+        {
+            get
+            {
+                return Math.Abs((right - left));
+            }
+        }
+        public int Height
+        {
+            get
+            {
+                return (bottom - top);
+            }
+        }
+        public Rectangle ToRectangle()
+        {
+            return new Rectangle(left, top, Width, Height);
+        }
+    }
+
+
+
+
     public struct BROWSEINFO
     {
         // PENDING: or, creates the BIF class for the constants below
@@ -115,19 +180,6 @@ namespace BandObjectLib.Interop
         public IntPtr wParam;
         public uint message;
         public IntPtr hwnd;
-    }
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    public struct DESKBANDINFO
-    {
-        public DBIM dwMask;
-        public Point ptMinSize;
-        public Point ptMaxSize;
-        public Point ptIntegral;
-        public Point ptActual;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 0xff)]
-        public string wszTitle;
-        public DBIMF dwModeFlags;
-        public int crBkgnd;
     }
     [StructLayout(LayoutKind.Sequential)]
     public struct DEV_BROADCAST_HDR
@@ -265,16 +317,6 @@ namespace BandObjectLib.Interop
         public int mouseData;
     }
     [StructLayout(LayoutKind.Sequential)]
-    public struct MSG
-    {
-        public IntPtr hwnd;
-        public uint message;
-        public IntPtr wParam;
-        public IntPtr lParam;
-        public uint time;
-        public POINT pt;
-    }
-    [StructLayout(LayoutKind.Sequential)]
     public struct NMCUSTOMDRAW
     {
         public NMHDR hdr;
@@ -385,80 +427,10 @@ namespace BandObjectLib.Interop
         public int iPos;
         public int iDelta;
     }
-    [StructLayout(LayoutKind.Sequential)]
-    public struct POINT
-    {
-        public int x;
-        public int y;
-        public POINT(Point pnt)
-        {
-            x = pnt.X;
-            y = pnt.Y;
-        }
 
-        public Point ToPoint()
-        {
-            return new Point(x, y);
-        }
-    }
-    [StructLayout(LayoutKind.Sequential)]
-    public struct REBARBANDINFO
-    {
-        public int cbSize;
-        public int fMask;
-        public int fStyle;
-        public int clrFore;
-        public int clrBack;
-        public IntPtr lpText;
-        public int cch;
-        public int iImage;
-        public IntPtr hwndChild;
-        public int cxMinChild;
-        public int cyMinChild;
-        public int cx;
-        public IntPtr hbmBack;
-        public int wID;
-        public int cyChild;
-        public int cyMaxChild;
-        public int cyIntegral;
-        public int cxIdeal;
-        public IntPtr lParam;
-        public int cxHeader;
-    }
-    [StructLayout(LayoutKind.Sequential)]
-    public struct RECT
-    {
-        public int left;
-        public int top;
-        public int right;
-        public int bottom;
-        public RECT(Rectangle rectangle)
-        {
-            left = rectangle.X;
-            top = rectangle.Y;
-            right = rectangle.Right;
-            bottom = rectangle.Bottom;
-        }
 
-        public int Width
-        {
-            get
-            {
-                return Math.Abs((right - left));
-            }
-        }
-        public int Height
-        {
-            get
-            {
-                return (bottom - top);
-            }
-        }
-        public Rectangle ToRectangle()
-        {
-            return new Rectangle(left, top, Width, Height);
-        }
-    }
+
+
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct SHELLEXECUTEINFO
     {

@@ -17,17 +17,16 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using Image = System.Drawing.Image;
 using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
 using Keys = System.Windows.Forms.Keys;
 
-namespace QTTabBarLib {
+namespace QTTabBarLib
+{
     internal partial class Options10_Apps : OptionsDialogTab, IHotkeyContainer {
         private ParentedCollection<AppEntry> CurrentApps;
         public event NewHotkeyRequestedHandler NewHotkeyRequested;
@@ -156,66 +155,5 @@ namespace QTTabBarLib {
             textbox.CaretIndex = caret + var.Length;
         }
 
-        #region ---------- Binding Classes ----------
-        // INotifyPropertyChanged is implemented automatically by Notify Property Weaver!
-        #pragma warning disable 0067 // "The event 'PropertyChanged' is never used"
-        // ReSharper disable MemberCanBePrivate.Local
-        // ReSharper disable UnusedMember.Local
-        // ReSharper disable UnusedAutoPropertyAccessor.Local
-
-        private class AppEntry : INotifyPropertyChanged, IEditableEntry, ITreeViewItem, IHotkeyEntry {
-            public event PropertyChangedEventHandler PropertyChanged;
-            public IList ParentList { get; set; }
-            public ITreeViewItem ParentItem { get; set; }
-            public ParentedCollection<AppEntry> Children { get; set; }
-            public bool IsFolder { get { return Children != null; } }
-            public bool IsEditing { get; set; }
-            public bool IsSelected { get; set; }
-            public bool IsExpanded { get; set; }
-            public IList ChildrenList { get { return Children; } }
-
-            public string Name { get; set; }
-            public string Path { get; set; }
-            public string Args { get; set; }
-            public string WorkingDir { get; set; }
-            public Keys ShortcutKey { get; set; }
-            public string KeyActionText {
-                get {
-                    string AppPrefix = QTUtility.TextResourcesDic["Options_Page10_Apps"][17];
-                    return string.Format(AppPrefix, Name);
-                }
-            }
-
-            public string HotkeyString {
-                get { return QTUtility2.MakeKeyString(ShortcutKey); }
-            }
-
-            public Image Icon {
-                get {
-                    return IsFolder
-                      ? QTUtility.ImageListGlobal.Images["folder"]
-                      : QTUtility.GetIcon(Path, false).ToBitmap();
-                }
-            }
-
-            public AppEntry(string folderName, IEnumerable<AppEntry> children) {
-                Name = folderName;
-                Children = new ParentedCollection<AppEntry>(this, children);
-            }
-
-            public AppEntry(string name, string path) {
-                Path = path;
-                Name = name;
-            }
-
-            public AppEntry(UserApp app) {
-                Path = app.Path;
-                Name = app.Name;
-                Args = app.Args;
-                WorkingDir = app.WorkingDir;
-                ShortcutKey = app.ShortcutKey;
-            }
-        }
-        #endregion
     }
 }

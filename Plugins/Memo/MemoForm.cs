@@ -24,6 +24,9 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 
+
+using BandObjectLib.Interop;
+
 namespace QuizoPlugins {
     internal sealed class MemoForm : Form {
         private Button button1;

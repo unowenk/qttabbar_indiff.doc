@@ -19,31 +19,8 @@ using System;
 
 namespace BandObjectLib.Interop
 {
-    [Flags]
-    public enum DBIM : uint {
-        ACTUAL = 8,
-        BKCOLOR = 0x40,
-        INTEGRAL = 4,
-        MAXSIZE = 2,
-        MINSIZE = 1,
-        MODEFLAGS = 0x20,
-        TITLE = 0x10
-    }
-    [Flags]
-    public enum DBIMF : uint
-    {
-        ADDTOFRONT = 0x200,
-        BKCOLOR = 0x40,
-        BREAK = 0x100,
-        DEBOSSED = 0x20,
-        FIXED = 1,
-        FIXEDBMP = 4,
-        NORMAL = 0,
-        TOPALIGN = 0x400,
-        UNDELETEABLE = 0x10,
-        USECHEVRON = 0x80,
-        VARIABLEHEIGHT = 8
-    }
+
+
     public enum ScrollAmount
     {
         LargeDecrement = 0,
@@ -176,5 +153,101 @@ namespace BandObjectLib.Interop
         public const int SUPPORTHYPERLINKS = 0x08;
         public const int NOANIMATIONS = 0x10;
         public const int NOSCROLLTIPS = 0x20;
+    }
+
+
+    public static class LVS_EX
+    {
+        public const uint GRIDLINES = 0x00000001;
+        public const uint SUBITEMIMAGES = 0x00000002;
+        public const uint CHECKBOXES = 0x00000004;
+        public const uint TRACKSELECT = 0x00000008;
+        public const uint HEADERDRAGDROP = 0x00000010;
+        public const uint FULLROWSELECT = 0x00000020; // applies to report mode only
+        public const uint ONECLICKACTIVATE = 0x00000040;
+        public const uint TWOCLICKACTIVATE = 0x00000080;
+        public const uint FLATSB = 0x00000100;
+        public const uint REGIONAL = 0x00000200;
+        public const uint INFOTIP = 0x00000400; // listview does InfoTips for you
+        public const uint UNDERLINEHOT = 0x00000800;
+        public const uint UNDERLINECOLD = 0x00001000;
+        public const uint MULTIWORKAREAS = 0x00002000;
+        public const uint LABELTIP = 0x00004000; // listview unfolds partly hidden labels if it does not have infotip text
+        public const uint BORDERSELECT = 0x00008000; // border selection style instead of highlight
+        public const uint DOUBLEBUFFER = 0x00010000;
+        public const uint HIDELABELS = 0x00020000;
+        public const uint SINGLEROW = 0x00040000;
+        public const uint SNAPTOGRID = 0x00080000; // Icons automatically snap to grid.
+        public const uint SIMPLESELECT = 0x00100000; // Also changes overlay rendering to top right for icon mode.
+        public const uint JUSTIFYCOLUMNS = 0x00200000; // Icons are lined up in columns that use up the whole view area.
+        public const uint TRANSPARENTBKGND = 0x00400000; // Background is painted by the parent via WM_PRINTCLIENT
+        public const uint TRANSPARENTSHADOWTEXT = 0x00800000; // Enable shadow text on transparent backgrounds only =useful with bitmaps
+        public const uint AUTOAUTOARRANGE = 0x01000000; // Icons automatically arrange if no icon positions have been set
+        public const uint HEADERINALLVIEWS = 0x02000000; // Display column header in all view modes
+        public const uint AUTOCHECKSELECT = 0x08000000;
+        public const uint AUTOSIZECOLUMNS = 0x10000000;
+        public const uint COLUMNSNAPPOINTS = 0x40000000;
+        public const uint COLUMNOVERFLOW = 0x80000000;
+    };
+
+
+    public static class LVIS
+    {
+        public const int FOCUSED = 0x0001;
+        public const int SELECTED = 0x0002;
+        public const int CUT = 0x0004;
+        public const int DROPHILITED = 0x0008;
+        public const int GLOW = 0x0010;
+        public const int ACTIVATING = 0x0020;
+        public const int OVERLAYMASK = 0x0F00;
+        public const int STATEIMAGEMASK = 0xF000;
+    }
+
+
+    public static class LVNI
+    {
+        public const int ALL = 0x0000;
+        public const int FOCUSED = 0x0001;
+        public const int SELECTED = 0x0002;
+        public const int CUT = 0x0004;
+        public const int DROPHILITED = 0x0008;
+        public const int STATEMASK = (FOCUSED | SELECTED | CUT | DROPHILITED);
+        public const int VISIBLEORDER = 0x0010;
+        public const int PREVIOUS = 0x0020;
+        public const int VISIBLEONLY = 0x0040;
+        public const int SAMEGROUPONLY = 0x0080;
+        public const int ABOVE = 0x0100;
+        public const int BELOW = 0x0200;
+        public const int TOLEFT = 0x0400;
+        public const int TORIGHT = 0x0800;
+        public const int DIRECTIONMASK = (ABOVE | BELOW | TOLEFT | TORIGHT);
+    }
+
+
+    public static class CDDS
+    {
+        public const int PREPAINT = 1;
+        public const int POSTPAINT = 2;
+        public const int PREERASE = 3;
+        public const int POSTERASE = 4;
+        public const int ITEM = 0x10000;
+        public const int ITEMPREPAINT = (ITEM | PREPAINT);
+        public const int ITEMPOSTPAINT = (ITEM | POSTPAINT);
+        public const int ITEMPREERASE = (ITEM | PREERASE);
+        public const int ITEMPOSTERASE = (ITEM | POSTERASE);
+        public const int SUBITEM = 0x20000;
+    }
+
+    public static class CDRF
+    {
+        public const int DODEFAULT = 0x000;
+        public const int NEWFONT = 0x002;
+        public const int SKIPDEFAULT = 0x004;
+        public const int DOERASE = 0x008;
+        public const int NOTIFYPOSTPAINT = 0x010;
+        public const int NOTIFYITEMDRAW = 0x020;
+        public const int NOTIFYSUBITEMDRAW = 0x020;
+        public const int NOTIFYPOSTERASE = 0x040;
+        public const int SKIPPOSTPAINT = 0x100;
     }
 }

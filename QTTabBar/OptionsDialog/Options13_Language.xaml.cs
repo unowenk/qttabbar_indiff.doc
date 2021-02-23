@@ -31,7 +31,8 @@ using DialogResult = System.Windows.Forms.DialogResult;
 using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
 using SaveFileDialog = System.Windows.Forms.SaveFileDialog;
 
-namespace QTTabBarLib {
+namespace QTTabBarLib
+{
     internal partial class Options13_Language : OptionsDialogTab {
         private ObservableCollection<LangEntry> LangItems = new ObservableCollection<LangEntry>();
         private ObservableCollection<string> PluginFiles;
@@ -229,48 +230,8 @@ namespace QTTabBarLib {
                     //QTUtility.ValidateTextResources
             }
          }
-        #endregion
-
-        #region ---------- Binding Classes ----------
-        // INotifyPropertyChanged is implemented automatically by Notify Property Weaver!
-        #pragma warning disable 0067 // "The event 'PropertyChanged' is never used"
-        // ReSharper disable MemberCanBePrivate.Local
-        // ReSharper disable UnusedMember.Local
-        // ReSharper disable UnusedAutoPropertyAccessor.Local
-
-        private class LangEntry : INotifyPropertyChanged, IEditableEntry {
-            public event PropertyChangedEventHandler PropertyChanged;
-            public string Original { get { return Index < 0 ? Key : QTUtility.TextResourcesDic[Key][Index]; } }
-            public int Index { get; set; }
-            public bool IsEditing { get; set; }
-            public string Location { get {
-                return Index < 0 ? "** Metadata **" : Key;
-                // todo
-            }}
-
-            public string Key { get; set; }
-            public string Translated { get; set; }
-
-            public LangEntry(string key, int index) {
-                Key = key;
-                Index = index;
-                Reset();
-            }
-
-            public void Reset() {
-                string[] res;
-                if(Index >= 0) {
-                    Translated = Original;
-                }
-                else if(QTUtility.TextResourcesDic.TryGetValue(Key, out res)) {
-                    Translated = res[0];
-                }
-                else {
-                    Translated = "";
-                }
-            }
-        }
 
         #endregion
+
     }
 }

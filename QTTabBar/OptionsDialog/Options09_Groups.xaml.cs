@@ -17,16 +17,14 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Image = System.Drawing.Image;
 using Keys = System.Windows.Forms.Keys;
 
-namespace QTTabBarLib {
+namespace QTTabBarLib
+{
     internal partial class Options09_Groups : OptionsDialogTab, IHotkeyContainer {
         private ParentedCollection<GroupEntry> CurrentGroups;
         public event NewHotkeyRequestedHandler NewHotkeyRequested;
@@ -140,118 +138,5 @@ namespace QTTabBarLib {
             e.Handled = true;
         }
 
-        #region ---------- Binding Classes ----------
-        // INotifyPropertyChanged is implemented automatically by Notify Property Weaver!
-        #pragma warning disable 0067 // "The event 'PropertyChanged' is never used"
-        // ReSharper disable MemberCanBePrivate.Local
-        // ReSharper disable UnusedMember.Local
-        // ReSharper disable UnusedAutoPropertyAccessor.Local
-
-        private class FolderEntry : INotifyPropertyChanged, IEditableEntry, ITreeViewItem {
-            public event PropertyChangedEventHandler PropertyChanged;
-            public IList ParentList { get; set; }
-            public ITreeViewItem ParentItem { get; set; }
-            public string Path { get; set; }
-            public bool IsEditing { get; set; }
-            public bool IsSelected { get; set; }
-            public bool IsExpanded { get; set; }
-            public IList ChildrenList { get { return null; } }
-
-            public string DisplayText {
-                get {
-                    return QTUtility2.MakePathDisplayText(Path, true);
-                }
-            }
-            public Image Icon {
-                get {
-                    return QTUtility.GetIcon(Path, false).ToBitmap();
-                }
-            }
-            public bool IsVirtualFolder {
-                get {
-                    return Path.StartsWith("::");
-                }
-            }
-
-            public FolderEntry(string path) {
-                Path = path;
-            }
-
-            public FolderEntry() {
-            }
-        }
-
-        private class GroupEntry : INotifyPropertyChanged, IEditableEntry, ITreeViewItem, IHotkeyEntry {
-            public event PropertyChangedEventHandler PropertyChanged;
-            public IList ParentList { get; set; }
-            public ITreeViewItem ParentItem { get; set; }
-            public string Name { get; set; }
-            public Image Icon { get; private set; }
-            public ParentedCollection<FolderEntry> Folders { get; private set; }
-            public bool Startup { get; set; }
-            public Keys ShortcutKey { get; set; }
-
-            public string KeyActionText {
-                get {
-                    string GroupPrefix = QTUtility.TextResourcesDic["Options_Page09_Groups"][7];
-                    return string.Format(GroupPrefix, Name);
-                }
-            }
-
-            public string HotkeyString {
-                get { return QTUtility2.MakeKeyString(ShortcutKey); }
-            }
-            public bool IsEditing { get; set; }
-            public bool IsSelected { get; set; }
-            public bool IsExpanded { get; set; }
-            public IList ChildrenList { get { return Folders; }}
-
-            private void Folders_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
-                if(e.OldItems != null) {
-                    foreach(FolderEntry child in e.OldItems) {
-                        child.PropertyChanged -= FolderEntry_PropertyChanged;
-                    }
-                }
-                if(e.NewItems != null) {
-                    foreach(FolderEntry child in e.NewItems) {
-                        child.PropertyChanged += FolderEntry_PropertyChanged;
-                    }
-                }
-                RefreshIcon();
-            }
-
-            private void FolderEntry_PropertyChanged(object sender, PropertyChangedEventArgs e) {
-                if(Folders.Count > 0 && sender == Folders.First()) {
-                    RefreshIcon();
-                }
-            }
-
-            private void RefreshIcon() {
-                Icon = Folders.Count == 0 ? QTUtility.ImageListGlobal.Images["folder"] : Folders.First().Icon;
-            }
-
-            public GroupEntry(string name, Keys shortcutKey, bool startup, IEnumerable<FolderEntry> folders) {
-                Name = name;
-                Startup = startup;
-                ShortcutKey = shortcutKey;
-                Folders = new ParentedCollection<FolderEntry>(this, folders);
-                Folders.CollectionChanged += Folders_CollectionChanged;
-                RefreshIcon();
-            }
-
-            public GroupEntry(string name) {
-                Name = name;
-                Folders = new ParentedCollection<FolderEntry>(this);
-                Folders.CollectionChanged += Folders_CollectionChanged;
-                RefreshIcon();
-            }
-
-            public GroupEntry() {
-                Folders.CollectionChanged += Folders_CollectionChanged;
-                RefreshIcon();
-            }
-        }
-
-        #endregion
     }
 }

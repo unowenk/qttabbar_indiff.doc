@@ -20,13 +20,14 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
-using BandObjectLib;
+//using BandObjectLib;
 using Microsoft.Win32;
 using SHDocVw;
 
 
-using BandObjectLib.Interop;
-using BandObjectLib.Interop.QTTabBar;
+//using BandObjectLib.Interop;
+//using BandObjectLib.Interop.QTTabBar;
+using BandObjectLib.Interop.MSBandObject;
 
 namespace QTTabBarLib {
 

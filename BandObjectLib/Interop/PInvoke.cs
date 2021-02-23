@@ -31,6 +31,23 @@ namespace BandObjectLib.Interop
     [SuppressUnmanagedCodeSecurity]
     public static class PInvoke {
 
+
+
+        public static IntPtr toIntPtr<T>(T t,bool fDeleteOld = false)
+        {
+            IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(t));
+            Marshal.StructureToPtr(t, ptr, fDeleteOld);
+            return ptr;
+        }
+        public static T fromIntPtr<T>(IntPtr ptr)
+        {
+            return (T)Marshal.PtrToStructure(ptr, typeof(T));
+        }
+        public static void freeIntPtr(IntPtr ptr)
+        {
+            Marshal.FreeHGlobal(ptr);
+        }
+
         public static IntPtr CreatePIDL(byte[] data)
         {
             if ((data == null) || (data.Length == 0))
@@ -199,8 +216,10 @@ namespace BandObjectLib.Interop
         public static extern IntPtr ILClone(IntPtr pidl);
         [DllImport("shell32.dll")]
         public static extern IntPtr ILCombine(IntPtr pidl1_ABSOLUTE, IntPtr pidl2_RELATIVE);
-        [DllImport("shell32.dll", CharSet = CharSet.Unicode)]
-        public static extern IntPtr ILCreateFromPath(string pszPath);
+        //[DllImport("shell32.dll", CharSet = CharSet.Unicode)]
+        //public static extern IntPtr ILCreateFromPath(string pszPath);
+        [DllImport("shell32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr ILCreateFromPath([MarshalAs(UnmanagedType.LPTStr)] string pszPath);
         [DllImport("shell32.dll")]
         public static extern IntPtr ILFindLastID(IntPtr pidl);
         [DllImport("shell32.dll")]
@@ -282,6 +301,8 @@ namespace BandObjectLib.Interop
         public static extern IntPtr SelectObject(IntPtr hdc, IntPtr hgdiobj);
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+        //[DllImport("user32.dll", CharSet = CharSet.Auto)]
+        //public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
         public static IntPtr SendMessage<T>(IntPtr hWnd, uint Msg, IntPtr wParam, ref T lParam) {
             IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(lParam));
             try {
@@ -294,6 +315,7 @@ namespace BandObjectLib.Interop
                 if(ptr != IntPtr.Zero) Marshal.FreeHGlobal(ptr);
             }
         }
+
         [DllImport("gdi32.dll")]
         public static extern int SetBkMode(IntPtr hdc, int iBkMode);
         [DllImport("user32.dll")]

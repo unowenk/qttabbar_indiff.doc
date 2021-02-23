@@ -23,7 +23,8 @@ using System.Windows.Data;
 using System.Windows.Input;
 using Keys = System.Windows.Forms.Keys;
 
-namespace QTTabBarLib {
+namespace QTTabBarLib
+{
     internal partial class Options08_Keys : OptionsDialogTab, IHotkeyContainer {
         private List<HotkeyEntry> HotkeyEntries;
         public event NewHotkeyRequestedHandler NewHotkeyRequested;
@@ -96,51 +97,5 @@ namespace QTTabBarLib {
             e.Handled = true;
         }
 
-        #region ---------- Binding Classes ----------
-        // INotifyPropertyChanged is implemented automatically by Notify Property Weaver!
-        #pragma warning disable 0067 // "The event 'PropertyChanged' is never used"
-        // ReSharper disable MemberCanBePrivate.Local
-        // ReSharper disable UnusedMember.Local
-        // ReSharper disable UnusedAutoPropertyAccessor.Local
-
-        private class HotkeyEntry : INotifyPropertyChanged, IHotkeyEntry {
-            public event PropertyChangedEventHandler PropertyChanged;
-            private int[] raws;
-            public int RawKey {
-                get { return raws[Index]; }
-                set { raws[Index] = value; }
-            }
-            public bool Enabled {
-                get { return (RawKey & QTUtility.FLAG_KEYENABLED) != 0 && RawKey != QTUtility.FLAG_KEYENABLED; }
-                set { if(value) RawKey |= QTUtility.FLAG_KEYENABLED; else RawKey &= ~QTUtility.FLAG_KEYENABLED; }
-            }
-            public Keys ShortcutKey {
-                get { return (Keys)(RawKey & ~QTUtility.FLAG_KEYENABLED); }
-                set { RawKey = (int)value | (Enabled ? QTUtility.FLAG_KEYENABLED : 0); }
-            }
-            public bool Assigned {
-                get { return ShortcutKey != Keys.None; }
-            }
-            public string HotkeyString {
-                get { return QTUtility2.MakeKeyString(ShortcutKey); }
-            }
-            public string PluginName { get; set; }
-            public string KeyActionText { get {
-                return PluginName == "" 
-                        ? QTUtility.TextResourcesDic["ShortcutKeys_ActionNames"][Index] 
-                        : pluginAction;
-            } }
-            public int Index { get; set; }
-
-            private string pluginAction;
-            public HotkeyEntry(int[] raws, int index, string action = "", string pluginName = "") {
-                this.raws = raws;
-                Index = index;
-                pluginAction = action;
-                PluginName = pluginName;
-            }
-        }
-
-        #endregion
     }
 }

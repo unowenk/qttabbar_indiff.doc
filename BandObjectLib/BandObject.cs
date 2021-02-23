@@ -24,29 +24,46 @@ using SHDocVw;
 
 using BandObjectLib.Interop;
 using BandObjectLib.Interop.BandObjectLib;
+using BandObjectLib.Interop.RebarControls;
+using BandObjectLib.Interop.MSBandObject;
 
 
-namespace BandObjectLib {
+
+//https://docs.microsoft.com/zh-cn/cpp/mfc/rebar-controls-and-bands?view=msvc-160
+//https://docs.microsoft.com/en-us/previous-versions/windows/desktop/legacy/cc144099(v=vs.85)?redirectedfrom=MSDN
+
+
+
+//https://docs.microsoft.com/en-us/windows/win32/shell/band-objects
+namespace BandObjectLib
+{
+
     public class BandObject : UserControl, IDeskBand, IDockingWindow, IInputObject, IObjectWithSite, IOleWindow, IPersistStream {
+        
         private Size _minSize = new Size(-1, -1);
+        public Size MinSize
+        {
+            get => _minSize;
+            set => _minSize = value;
+        }
+        /// <summary> 输入站点 </summary>
         protected IInputObjectSite BandObjectSite;
+        /// <summary> 输入站点（子）窗体。接口被包装为WebBrowser </summary>
         protected WebBrowserClass Explorer;
+        /// <summary> 输入站点父窗体句柄 </summary>
+        protected IntPtr ReBarHandle;
         protected bool fClosedDW;
         protected bool fFinalRelease;
-        protected IntPtr ReBarHandle;
         private RebarBreakFixer RebarSubclass;
-        private IAsyncResult result;
+        private IAsyncResult result; 
 
-        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        private static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
-        
+
         protected const int S_OK = 0;
         protected const int S_FALSE = 1;
         protected const int E_NOTIMPL = -2147467263;	// _HRESULT_TYPEDEF_(0x80004001L)
         protected const int E_FAIL = -2147467259;    // _HRESULT_TYPEDEF_(0x80004005L)
 
-        // We must subclass the rebar in order to fix a certain bug in 
-        // Windows 7.
+        // We must subclass the rebar in order to fix a certain bug in  Windows 7.
         internal sealed class RebarBreakFixer : NativeWindow {
             private readonly BandObject parent;
             public bool MonitorSetInfo { get; set; }
@@ -112,7 +129,7 @@ namespace BandObjectLib {
                             Marshal.StructureToPtr(info, ptr, false);
                             bool reset = MonitorSetInfo;
                             MonitorSetInfo = false;
-                            SendMessage(parent.ReBarHandle, RB.SETBANDINFO, (IntPtr)i, ptr);
+                            PInvoke.SendMessage(parent.ReBarHandle, RB.SETBANDINFO, (IntPtr)i, ptr);
                             MonitorSetInfo = reset;
                             Marshal.FreeHGlobal(ptr);
 
@@ -125,224 +142,308 @@ namespace BandObjectLib {
             }
         }
 
-        private int ActiveRebarCount() {
-            return (int)SendMessage(ReBarHandle, RB.GETBANDCOUNT, IntPtr.Zero, IntPtr.Zero);
-        }
 
-        // Determines if the DeskBand is preceded by a break.
-        protected bool BandHasBreak() {
-            int n = ActiveRebarCount();
-            for(int i = 0; i < n; ++i) {
-                REBARBANDINFO info = GetRebarBand(i, RBBIM.STYLE | RBBIM.CHILD);
-                if(info.hwndChild == Handle) {
-                    return (info.fStyle & RBBS.BREAK) != 0;
-                }
-            }
-            return true;
-        }
+        // ---------- interface ----------
 
-        public virtual void CloseDW(uint dwReserved) {
-            fClosedDW = true;
-            ShowDW(false);
-            Dispose(true);
-            if(Explorer != null) {
-                Marshal.ReleaseComObject(Explorer);
-                Explorer = null;
-            }
-            if(BandObjectSite != null) {
-                Marshal.ReleaseComObject(BandObjectSite);
-                BandObjectSite = null;
-            }
-            if(RebarSubclass != null) {
-                RebarSubclass.Enabled = false;
-                RebarSubclass = null;
-            }
-        }
-
-        public virtual void ContextSensitiveHelp(bool fEnterMode) {
-        }
-
-        public virtual void GetBandInfo(uint dwBandID, uint dwViewMode, ref DESKBANDINFO pdbi) {
-            if((pdbi.dwMask & DBIM.ACTUAL) != 0) {
-                pdbi.ptActual.X = Size.Width;
-                pdbi.ptActual.Y = Size.Height;
-            }
-            if((pdbi.dwMask & DBIM.INTEGRAL) != 0) {
-                pdbi.ptIntegral.X = -1;
-                pdbi.ptIntegral.Y = -1;
-            }
-            if((pdbi.dwMask & DBIM.MAXSIZE) != 0) {
-                pdbi.ptMaxSize.X = pdbi.ptMaxSize.Y = -1;
-            }
-            if((pdbi.dwMask & DBIM.MINSIZE) != 0) {
-                pdbi.ptMinSize.X = MinSize.Width;
-                pdbi.ptMinSize.Y = MinSize.Height;
-            }
-            if((pdbi.dwMask & DBIM.MODEFLAGS) != 0) {
-                pdbi.dwModeFlags = DBIMF.NORMAL;
-            }
-            if((pdbi.dwMask & DBIM.BKCOLOR) != 0) {
-                pdbi.dwMask &= ~DBIM.BKCOLOR;
-            }
-            if((pdbi.dwMask & DBIM.TITLE) != 0) {
-                pdbi.wszTitle = null;
-            }
-        }
-
-        private REBARBANDINFO GetRebarBand(int idx, int fMask) {
-            REBARBANDINFO info = new REBARBANDINFO();
-            info.cbSize = Marshal.SizeOf(info);
-            info.fMask = fMask;
-            IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(info));
-            Marshal.StructureToPtr(info, ptr, false);
-            SendMessage(ReBarHandle, RB.GETBANDINFO, (IntPtr)idx, ptr);
-            info = (REBARBANDINFO)Marshal.PtrToStructure(ptr, typeof(REBARBANDINFO));
-            Marshal.FreeHGlobal(ptr);
-            return info;
-        }
-
-        public virtual void GetSite(ref Guid riid, out object ppvSite) {
-            ppvSite = BandObjectSite;
-        }
-
-        public virtual void GetWindow(out IntPtr phwnd) {
-            phwnd = Handle;
-        }
-
-        public virtual int HasFocusIO() {
-            if(!ContainsFocus) {
-                return 1;
-            }
-            return 0;
-        }
-
-        protected virtual void OnExplorerAttached() {
-        }
-
-        protected override void OnGotFocus(EventArgs e) {
-            base.OnGotFocus(e);
-            if((!fClosedDW && (BandObjectSite != null)) && IsHandleCreated) {
-                BandObjectSite.OnFocusChangeIS(this, 1);
-            }
-        }
-
-        protected override void OnLostFocus(EventArgs e) {
-            base.OnLostFocus(e);
-            if((!fClosedDW && (BandObjectSite != null)) && (ActiveControl == null)) {
-                BandObjectSite.OnFocusChangeIS(this, 0);
-            }
-        }
-
-        public virtual void ResizeBorderDW(IntPtr prcBorder, object punkToolbarSite, bool fReserved) {
-        }
-
-        // Override this to set whether the DeskBand has a break when it is 
-        // first displayed
-        protected virtual bool ShouldHaveBreak() {
-            return true;
-        }
-
-        public virtual void SetSite(object pUnkSite) {
-            if(Process.GetCurrentProcess().ProcessName == "iexplore") {
+        //IObjectWithSite.SetSite
+        public virtual void SetSite(object pUnkSite)
+        {
+            if (Process.GetCurrentProcess().ProcessName == "iexplore")
+            {
                 Marshal.ThrowExceptionForHR(E_FAIL);
             }
-            if(BandObjectSite != null) {
+            if (BandObjectSite != null)
+            {
                 Marshal.ReleaseComObject(BandObjectSite);
             }
-            if(Explorer != null) {
+            if (Explorer != null)
+            {
                 Marshal.ReleaseComObject(Explorer);
                 Explorer = null;
             }
             BandObjectSite = pUnkSite as IInputObjectSite;
-            if(BandObjectSite != null) {
-                try {
+            if (BandObjectSite != null)
+            {
+                try
+                {
                     object obj2;
                     ((_IServiceProvider)BandObjectSite).QueryService(ExplorerGUIDs.IID_IWebBrowserApp, ExplorerGUIDs.IID_IUnknown, out obj2);
                     Explorer = (WebBrowserClass)Marshal.CreateWrapperOfType(obj2 as IWebBrowser, typeof(WebBrowserClass));
                     OnExplorerAttached();
                 }
-                catch(COMException ) { // exception
+                catch (COMException)
+                { // exception
                     // QTUtility2.MakeErrorLog(exception, "MSG:" + exception.Message);
                 }
             }
-            try {
+            try
+            {
                 IOleWindow window = pUnkSite as IOleWindow;
-                if(window != null) {
+                if (window != null)
+                {
                     window.GetWindow(out ReBarHandle);
                 }
             }
-            catch (Exception ) // exc
+            catch (Exception) // exc
             {
-               //  logger.Log(exc);
+                //  logger.Log(exc);
             }
         }
 
-        public virtual void ShowDW(bool fShow) {
-            if(ReBarHandle != IntPtr.Zero && Environment.OSVersion.Version.Major > 5) {
-                if(RebarSubclass == null) {
+        //IObjectWithSite.GetSite
+        public virtual void GetSite(ref Guid riid, out object ppvSite)
+        {
+            ppvSite = BandObjectSite;
+        }
+
+
+        //IDeskBand
+        public virtual void GetWindow(out IntPtr phwnd)
+        {
+            phwnd = Handle;
+        }
+
+        //IDeskBand
+        public virtual void ContextSensitiveHelp(bool fEnterMode)
+        {
+        }
+
+        //IDeskBand
+        public virtual void ShowDW(bool fShow)
+        {
+            if (ReBarHandle != IntPtr.Zero && Environment.OSVersion.Version.Major > 5)
+            {
+                if (RebarSubclass == null)
+                {
                     RebarSubclass = new RebarBreakFixer(ReBarHandle, this);
                 }
 
                 RebarSubclass.MonitorSetInfo = true;
-                if(result == null || result.IsCompleted) {    
+                if (result == null || result.IsCompleted)
+                {
                     result = BeginInvoke(new UnsetInfoDelegate(UnsetInfo));
                 }
             }
             Visible = fShow;
         }
 
-        public virtual int TranslateAcceleratorIO(ref MSG msg) {
-            if(((msg.message == 0x100) && ((msg.wParam == ((IntPtr)9L)) || (msg.wParam == ((IntPtr)0x75L)))) && SelectNextControl(ActiveControl, (ModifierKeys & Keys.Shift) != Keys.Shift, true, false, false)) {
-                return 0;
+        //IDeskBand
+        public virtual void CloseDW(uint dwReserved)
+        {
+            fClosedDW = true;
+            ShowDW(false);
+            Dispose(true);
+            if (Explorer != null)
+            {
+                Marshal.ReleaseComObject(Explorer);
+                Explorer = null;
             }
-            return 1;
+            if (BandObjectSite != null)
+            {
+                Marshal.ReleaseComObject(BandObjectSite);
+                BandObjectSite = null;
+            }
+            if (RebarSubclass != null)
+            {
+                RebarSubclass.Enabled = false;
+                RebarSubclass = null;
+            }
         }
 
-        public virtual void UIActivateIO(int fActivate, ref MSG msg) {
-            if(fActivate != 0) {
+        //IDeskBand
+        public virtual void ResizeBorderDW(IntPtr prcBorder, object punkToolbarSite, bool fReserved)
+        {
+        }
+
+        //IDeskBand
+        public virtual void GetBandInfo(uint dwBandID, uint dwViewMode, ref DESKBANDINFO pdbi)
+        {
+            if ((pdbi.dwMask & DBIM.ACTUAL) != 0)
+            {
+                pdbi.ptActual.X = Size.Width;
+                pdbi.ptActual.Y = Size.Height;
+            }
+            if ((pdbi.dwMask & DBIM.INTEGRAL) != 0)
+            {
+                pdbi.ptIntegral.X = -1;
+                pdbi.ptIntegral.Y = -1;
+            }
+            if ((pdbi.dwMask & DBIM.MAXSIZE) != 0)
+            {
+                pdbi.ptMaxSize.X = pdbi.ptMaxSize.Y = -1;
+            }
+            if ((pdbi.dwMask & DBIM.MINSIZE) != 0)
+            {
+                pdbi.ptMinSize.X = MinSize.Width;
+                pdbi.ptMinSize.Y = MinSize.Height;
+            }
+            if ((pdbi.dwMask & DBIM.MODEFLAGS) != 0)
+            {
+                pdbi.dwModeFlags = DBIMF.NORMAL;
+            }
+            if ((pdbi.dwMask & DBIM.BKCOLOR) != 0)
+            {
+                pdbi.dwMask &= ~DBIM.BKCOLOR;
+            }
+            if ((pdbi.dwMask & DBIM.TITLE) != 0)
+            {
+                pdbi.wszTitle = null;
+            }
+        }
+
+
+        //IInputObject
+        public virtual void UIActivateIO(int fActivate, ref MSG msg)
+        {
+            if (fActivate != 0)
+            {
                 Control nextControl = GetNextControl(this, true);
-                if(nextControl != null) {
+                if (nextControl != null)
+                {
                     nextControl.Select();
                 }
                 Focus();
             }
         }
 
+        //IInputObject
+        public virtual int HasFocusIO()
+        {
+            if (!ContainsFocus)
+            {
+                return 1;
+            }
+            return 0;
+        }
+
+        //IInputObject
+        public virtual int TranslateAcceleratorIO(ref MSG msg)
+        {
+            if (((msg.message == 0x100) && ((msg.wParam == ((IntPtr)9L)) || (msg.wParam == ((IntPtr)0x75L)))) && SelectNextControl(ActiveControl, (ModifierKeys & Keys.Shift) != Keys.Shift, true, false, false))
+            {
+                return 0;
+            }
+            return 1;
+        }
+
+
+        //IPersistStream
+        public virtual void GetClassID(out Guid pClassID)
+        {
+            pClassID = Guid.Empty;
+        }
+
+        //IPersistStream
+        public virtual int IsDirty()
+        {
+            return 0;
+        }
+
+        //IPersistStream
+        public virtual void IPersistStreamLoad(object pStm)
+        {
+        }
+
+        //IPersistStream
+        public virtual void Save(IntPtr pStm, bool fClearDirty)
+        {
+        }
+
+        //IPersistStream
+        public virtual int GetSizeMax(out ulong pcbSize)
+        {
+            pcbSize = 0;
+            return E_NOTIMPL;
+        }
+
+
+
+        // ---------- override EventA ----------
+
+        protected override void OnGotFocus(EventArgs e)
+        {
+            base.OnGotFocus(e);
+            if ((!fClosedDW && (BandObjectSite != null)) && IsHandleCreated)
+            {
+                BandObjectSite.OnFocusChangeIS(this, 1);
+            }
+        }
+
+        protected override void OnLostFocus(EventArgs e)
+        {
+            base.OnLostFocus(e);
+            if ((!fClosedDW && (BandObjectSite != null)) && (ActiveControl == null))
+            {
+                BandObjectSite.OnFocusChangeIS(this, 0);
+            }
+        }
+
+
+
+        // ---------- customize 自定义 protected or protected virtual ----------
+        /// <remarks> 确定DeskBand是否在前面休息。？? </remarks>
+        // Determines if the DeskBand is preceded by a break.
+        protected bool BandHasBreak()
+        {
+            int n = ActiveRebarCount();
+            for (int i = 0; i < n; ++i)
+            {
+                REBARBANDINFO info = GetRebarBand(i, RBBIM.STYLE | RBBIM.CHILD);
+                if (info.hwndChild == Handle)
+                {
+                    return (info.fStyle & RBBS.BREAK) != 0;
+                }
+            }
+            return true;
+        }
+
+
+        protected virtual void OnExplorerAttached()
+        {
+        }
+
+        // Override this to set whether the DeskBand has a break when it is 
+        // first displayed
+        protected virtual bool ShouldHaveBreak()
+        {
+            return true;
+        }
+
+
+
+
+
+        // ---------- customize 自定义 private。 ----------
+        /// <remarks> 带的数量 </remarks>
+        private int ActiveRebarCount() {
+            return (int)PInvoke.SendMessage(ReBarHandle, RB.GETBANDCOUNT, IntPtr.Zero, IntPtr.Zero);
+        }
+
+        /// <remarks> 获取第n个带的信息 </remarks>
+        private REBARBANDINFO GetRebarBand(int idx, RBBIM fMask)
+        {
+            REBARBANDINFO info = REBARBANDINFO.Instantiate();
+            info.fMask = fMask;
+            IntPtr ptr = PInvoke.toIntPtr<REBARBANDINFO>(info, false);
+            PInvoke.SendMessage(ReBarHandle, RB.GETBANDINFO, (IntPtr)idx, ptr);
+            //info = (REBARBANDINFO)Marshal.PtrToStructure(ptr, typeof(REBARBANDINFO));
+            info = PInvoke.fromIntPtr<REBARBANDINFO>(ptr);
+            PInvoke.freeIntPtr(ptr);
+            return info;
+        }
+
+
         private delegate void UnsetInfoDelegate();
 
-        private void UnsetInfo() {
-            if(RebarSubclass != null) {
+        private void UnsetInfo()
+        {
+            if (RebarSubclass != null)
+            {
                 RebarSubclass.MonitorSetInfo = false;
             }
         }
 
-        public Size MinSize {
-            get {
-                return _minSize;
-            }
-            set {
-                _minSize = value;
-            }
-        }
 
-        public virtual void GetClassID(out Guid pClassID) {
-            pClassID = Guid.Empty;
-        }
 
-        public virtual int IsDirty() {
-            return 0;
-        }
-
-        public virtual void IPersistStreamLoad(object pStm) {
-        }
-
-        public virtual void Save(IntPtr pStm, bool fClearDirty) {
-        }
-
-        public virtual int GetSizeMax(out ulong pcbSize) {
-            const int E_NOTIMPL = -2147467263;
-            pcbSize = 0;
-            return E_NOTIMPL;
-        }
     }
 }

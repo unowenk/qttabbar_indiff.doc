@@ -42,7 +42,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -92,6 +92,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.OLE.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -111,10 +112,11 @@
     <Compile Include="BandObject.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Interop\MSBandObject.cs" />
     <Compile Include="Interop\Constants.cs" />
     <Compile Include="Interop\enum.cs" />
-    <Compile Include="Interop\internal.cs" />
     <Compile Include="Interop\PInvoke.cs" />
+    <Compile Include="Interop\Rebar Controls.cs" />
     <Compile Include="Interop\struct.cs" />
     <Compile Include="Interop\_IServiceProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

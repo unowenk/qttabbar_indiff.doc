@@ -19,16 +19,14 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
 using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
-using Image = System.Drawing.Image;
-namespace QTTabBarLib {
+namespace QTTabBarLib
+{
     internal partial class Options12_Plugins : OptionsDialogTab {
         private ObservableCollection<PluginEntry> CurrentPlugins;
 
@@ -257,98 +255,5 @@ namespace QTTabBarLib {
             }
         }
 
-        #region ---------- Binding Classes ----------
-        // INotifyPropertyChanged is implemented automatically by Notify Property Weaver!
-        #pragma warning disable 0067 // "The event 'PropertyChanged' is never used"
-        // ReSharper disable MemberCanBePrivate.Local
-        // ReSharper disable UnusedMember.Local
-        // ReSharper disable UnusedAutoPropertyAccessor.Local
-
-        private class PluginEntry : INotifyPropertyChanged {
-            public event PropertyChangedEventHandler PropertyChanged;
-            private Options12_Plugins parent;
-            private PluginInformation PluginInfo;
-            public PluginAssembly PluginAssembly { get; private set; }
-
-            public Image Icon { get { return PluginInfo.ImageLarge ?? Resources_Image.imgPlugin24; } }
-            public string Name { get { return PluginInfo.Name; } }
-            public string Title { get {
-                return Name + "  " + PluginInfo.Version;
-            } }
-            public string Author { get { return PluginInfo.Author; } }
-            public string Desc { get { return PluginInfo.Description; } }
-            public bool IsSelected { get; set; }
-            public double IconOpacity { get { return Enabled ? 1.0 : 0.5; } }
-            public bool DisableOnClose { get; set; }
-            public bool EnableOnClose { get; set; }
-            public bool InstallOnClose { get; set; }
-            public bool UninstallOnClose { get; set; }
-            public bool Enabled { get { return PluginInfo.Enabled; } set { PluginInfo.Enabled = value; } }
-            public string PluginID { get { return PluginInfo.PluginID; } }
-            public string Path { get { return PluginInfo.Path; } }
-            public Visibility StatusVisibility { get {
-                return DisableOnClose || EnableOnClose || InstallOnClose || UninstallOnClose
-                        ? Visibility.Visible
-                        : Visibility.Collapsed;
-            }}
-            public int StatusTextIdx { get {
-                if(UninstallOnClose) return 4;
-                if(InstallOnClose)   return 5;
-                if(EnableOnClose)    return 6;
-                if(DisableOnClose)   return 7;
-                return int.MaxValue;
-            }}
-            public Visibility MainBodyVisibility { get {
-                return UninstallOnClose ? Visibility.Collapsed : Visibility.Visible;
-            }}
-            public Color BackgroundColor { get {
-                if(StatusVisibility == Visibility.Visible) return Color.FromArgb(0x10, 0x60, 0xA0, 0xFF);
-                if(!Enabled) return Color.FromArgb(0x10, 0x00, 0x00, 0x00);
-                return Colors.Transparent;
-            }}
-            public Color StatusColor { get {
-                if(EnableOnClose || InstallOnClose) return Color.FromRgb(0x20, 0x80, 0x20);
-                if(DisableOnClose || UninstallOnClose) return Color.FromRgb(0x80, 0x80, 0x80);
-                return Colors.Transparent;
-            }}
-            public bool ShowEnableButton { get {
-                if(DisableOnClose) return true;
-                if(EnableOnClose) return false;
-                return !Enabled;
-            }}
-            public bool ShowDisabledTitle { get { return !(Enabled || InstallOnClose); } }
-            public bool ShowDisableButton { get { return !ShowEnableButton; } }
-
-            private bool cachedHasOptions;
-            private bool optionsQueried;
-
-            public bool HasOptions {
-                get {
-                    if(!Enabled) return false;
-                    if(optionsQueried) return cachedHasOptions;
-                    Plugin p;
-                    if(PluginManager.TryGetStaticPluginInstance(PluginID, out p)) {
-                        try {
-                            cachedHasOptions = p.Instance.HasOption;
-                            optionsQueried = true;
-                            return cachedHasOptions;
-                        }
-                        catch(Exception ex) {
-                            PluginManager.HandlePluginException(ex, new WindowInteropHelper(Window.GetWindow(parent)).Handle, Name,
-                                    "Checking if the plugin has options.");
-                        }
-                    }
-                    return false;
-                }
-            }
-
-            public PluginEntry(Options12_Plugins parent, PluginInformation pluginInfo, PluginAssembly pluginAssembly) {
-                this.parent = parent;
-                PluginInfo = pluginInfo;
-                PluginAssembly = pluginAssembly;
-            }
-        }
-
-        #endregion
     }
 }

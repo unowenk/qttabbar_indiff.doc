@@ -27,7 +27,8 @@ using System.Windows;
 using QTPlugin;
 using Size = System.Drawing.Size;
 
-namespace QTTabBarLib {
+namespace QTTabBarLib
+{
     internal partial class Options11_ButtonBar : OptionsDialogTab {
         private ImageStrip imageStripLarge;
         private ImageStrip imageStripSmall;
@@ -348,73 +349,6 @@ namespace QTTabBarLib {
             lstButtonBarCurrent.ScrollIntoView(lstButtonBarCurrent.SelectedItem);
         }
 
-        #region ---------- Binding Classes ----------
-        // INotifyPropertyChanged is implemented automatically by Notify Property Weaver!
-        #pragma warning disable 0067 // "The event 'PropertyChanged' is never used"
-        // ReSharper disable MemberCanBePrivate.Local
-        // ReSharper disable UnusedMember.Local
-        // ReSharper disable UnusedAutoPropertyAccessor.Local
-
-        private class ButtonEntry : INotifyPropertyChanged {
-            public event PropertyChangedEventHandler PropertyChanged;
-            private Options11_ButtonBar parent;
-
-            public PluginInformation PluginInfo { get; private set; }
-            public int Index { get; private set; }
-            public int Order { get; private set; }
-            public bool IsPluginButton { get { return PluginInfo != null; } }
-            public string PluginButtonText {
-                get {
-                    if(!IsPluginButton) return "";
-                    if(PluginInfo.PluginType == PluginType.BackgroundMultiple) {
-                        Plugin plugin;
-                        if(PluginManager.TryGetStaticPluginInstance(PluginInfo.PluginID, out plugin)) {
-                            try {
-                                return ((IBarMultipleCustomItems)plugin.Instance).GetName(Index);
-                            }
-                            catch { }
-                        }
-                    }
-                    return PluginInfo.Name;
-                }
-            }
-
-            public Image LargeImage { get { return getImage(true); } }
-            public Image SmallImage { get { return getImage(false); } }
-            private Image getImage(bool large) {
-                if(IsPluginButton) {
-                    if(PluginInfo.PluginType == PluginType.BackgroundMultiple) {
-                        Plugin plugin;
-                        if(PluginManager.TryGetStaticPluginInstance(PluginInfo.PluginID, out plugin)) {
-                            try {
-                                return ((IBarMultipleCustomItems)plugin.Instance).GetImage(large, Index);
-                            }
-                            catch { }
-                        }
-                    }
-                    return large
-                            ? PluginInfo.ImageLarge ?? Resources_Image.imgPlugin24
-                            : PluginInfo.ImageSmall ?? Resources_Image.imgPlugin16;
-                }
-                else if(Index == 0 || Index >= QTButtonBar.BII_WINDOWOPACITY) {
-                    return null;
-                }
-                else {
-                    return large
-                            ? parent.imageStripLarge[Index - 1]
-                            : parent.imageStripSmall[Index - 1];
-                }
-            }
-
-            public ButtonEntry(Options11_ButtonBar parent, int Order, int Index, PluginInformation PluginInfo = null) {
-                this.parent = parent;
-                this.Order = Order;
-                this.Index = Index;
-                this.PluginInfo = PluginInfo;
-            }
-        }
-
-        #endregion
 
     }
 }

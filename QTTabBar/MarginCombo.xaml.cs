@@ -25,7 +25,8 @@ using System.Windows.Data;
 using System.Windows.Input;
 using Padding = System.Windows.Forms.Padding;
 
-namespace QTTabBarLib {
+namespace QTTabBarLib
+{
 
     /// <summary>
     /// Interaction logic for MarginCombo.xaml
@@ -145,61 +146,6 @@ namespace QTTabBarLib {
             }
         }
 
-
-        #region ---------- Binding Classes ----------
-        // INotifyPropertyChanged is implemented automatically by Notify Property Weaver!
-        #pragma warning disable 0067 // "The event 'PropertyChanged' is never used"
-        // ReSharper disable MemberCanBePrivate.Local
-        // ReSharper disable UnusedMember.Local
-        // ReSharper disable UnusedAutoPropertyAccessor.Local
-
-        private class MarginEntry : INotifyPropertyChanged {
-            public event PropertyChangedEventHandler PropertyChanged;
-            private MarginCombo Parent;
-
-            public Thickness PanelMargin { get {
-                Thickness t = new Thickness(5);
-                if(Index > 0) t.Top = 1;
-                if(Index < 4) t.Bottom = 0;
-                return t;
-            }}
-            public Thickness LabelMargin { get {
-                return new Thickness(Index == 0 ? 5 : 15, 0, 10, 0);
-            }}
-
-            public string TextBoxValue {
-                get {
-                    return Value >= 0 ? Value.ToString() : "";
-                }
-                set {
-                    int i;
-                    if(!int.TryParse(value.Trim(), out i) || i < 0 || i > VAL_MAX) return;
-                    Padding current = Parent.Value;
-                    switch(Index) {
-                        case 1: current.Left   = i; break;
-                        case 2: current.Top    = i; break;
-                        case 3: current.Right  = i; break;
-                        case 4: current.Bottom = i; break;
-                        default: current = new Padding(i); break;
-                    }
-                    Parent.Value = current;
-                }
-            }
-            public int Value { get; set; }
-            public int Index { get; set; }
-
-            public MarginEntry(MarginCombo parent, int idx) {
-                Index = idx;
-                Parent = parent;
-            }
-
-            public override string ToString() {
-                Padding t = Parent.Value;
-                return t.Left + ", " + t.Top + ", " + t.Right + ", " + t.Bottom;
-            }
-        }
-
-        #endregion
 
     }
 }

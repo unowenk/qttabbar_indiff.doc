@@ -83,18 +83,6 @@ namespace BandObjectLib.Interop
         int DragDrop(IDataObject pDataObj, int grfKeyState, Point pt, ref DragDropEffects pdwEffect);
     }
 
-    //combase.dll\IPersistStream.PSFactoryBuffer
-    [ComImport, Guid("00000109-0000-0000-C000-000000000046"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown), SuppressUnmanagedCodeSecurity]
-    public interface IPersistStream
-    {
-        void GetClassID(out Guid pClassID);
-        [PreserveSig]
-        int IsDirty();
-        void IPersistStreamLoad([In, MarshalAs(UnmanagedType.Interface)] object pStm);
-        void Save([In, MarshalAs(UnmanagedType.Interface)] IntPtr pStm, [In, MarshalAs(UnmanagedType.Bool)] bool fClearDirty);
-        [PreserveSig]
-        int GetSizeMax(out ulong pcbSize);
-    }
 
 
 
@@ -124,20 +112,6 @@ namespace BandObjectLib.Interop
 
 
 
-    //ActXPrxy.dll/IDeskBand2.PSFactoryBuffer
-    [ComImport, SuppressUnmanagedCodeSecurity, Guid("79D16DE4-ABEE-4021-8D9D-9169B261D657"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    public interface IDeskBand2
-    {
-        void GetWindow(out IntPtr phwnd);
-        void ContextSensitiveHelp([In] bool fEnterMode);
-        void ShowDW([In] bool fShow);
-        void CloseDW([In] uint dwReserved);
-        void ResizeBorderDW(IntPtr prcBorder, [In, MarshalAs(UnmanagedType.IUnknown)] object punkToolbarSite, bool fReserved);
-        void GetBandInfo(uint dwBandID, uint dwViewMode, ref DESKBANDINFO pdbi);
-        void CanRenderComposited(out bool pfCanRenderComposited);
-        void SetCompositionState(bool fCompositionEnabled);
-        void GetCompositionState(out bool pfCompositionEnabled);
-    }
 
 
     //ActXPrxy.dll\IEnumTravelLogEntry.PSFactoryBuffer
@@ -211,13 +185,22 @@ namespace BandObjectLib.Interop
 
 
 
-
+    //https://docs.microsoft.com/zh-cn/search/?terms=IServiceProvider.QueryService
+    //https://docs.microsoft.com/zh-cn/dotnet/api/microsoft.sqlserver.management.ui.vsintegration.editors.editorfactorypackage.microsoft-visualstudio-ole-interop-iserviceprovider-queryservice?view=sqlserver-2016
+    //Namespace: Microsoft.SqlServer.Management.UI.VSIntegration.Editors
+    //Assembly: SQLEditors.dll
+    //https://docs.microsoft.com/zh-cn/dotnet/api/microsoft.visualstudio.ole.interop.iserviceprovider.queryservice?view=visualstudiosdk-2019
+    //Namespace: Microsoft.VisualStudio.OLE.Interop
+    //Assembly: Microsoft.VisualStudio.OLE.Interop.dll
+    //
+    //Microsoft.VisualStudio.OLE.Interop.IServiceProvider
     //OneCoreCommonProxyStub.dll/IServiceProvider.PSFactoryBuffer
+    /// <remarks> 获取服务提供商根据其服务类型公开的服务。 </remarks>
     [ComImport, Guid("6d5140c1-7436-11ce-8034-00aa006009fa"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown), SuppressUnmanagedCodeSecurity]
     public interface _IServiceProvider
     {
         void QueryService(
-                [In, MarshalAs(UnmanagedType.LPStruct)] Guid guid,
+                [In, MarshalAs(UnmanagedType.LPStruct)] Guid guidService,
                 [In, MarshalAs(UnmanagedType.LPStruct)] Guid riid,
                 [MarshalAs(UnmanagedType.Interface)] out object Obj);
     }
@@ -884,14 +867,6 @@ namespace BandObjectLib.Interop
 
 
 
-
-    //oleaut32.dll\IObjectWithSite.PSFactoryBuffer
-    [ComImport, Guid("FC4801A3-2BA9-11CF-A229-00AA003D7352"), SuppressUnmanagedCodeSecurity, InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    public interface IObjectWithSite
-    {
-        void SetSite([In, MarshalAs(UnmanagedType.IUnknown)] object pUnkSite);
-        void GetSite(ref Guid riid, [MarshalAs(UnmanagedType.IUnknown)] out object ppvSite);
-    }
 
     //oleaut32.dll\IUIAutomationRegistrar.PSOAInterface
     //TypeLib==UIAutomationCore

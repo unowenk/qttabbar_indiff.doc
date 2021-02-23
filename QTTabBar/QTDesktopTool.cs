@@ -36,6 +36,7 @@ using Timer = System.Windows.Forms.Timer;
 
 using BandObjectLib.Interop;
 using BandObjectLib.Interop.QTTabBar;
+using BandObjectLib.Interop.MSBandObject;
 
 
 namespace QTTabBarLib {

@@ -29,7 +29,8 @@ using QTTabBarLib.Interop;
 
 
 using BandObjectLib.Interop;
-using BandObjectLib.Interop.QTTabBar;
+//using BandObjectLib.Interop.QTTabBar;
+using BandObjectLib.Interop.RebarControls;
 
 
 namespace QTTabBarLib {
@@ -64,9 +65,9 @@ namespace QTTabBarLib {
             get {
                 REBARBANDINFO structure = new REBARBANDINFO();
                 structure.cbSize = Marshal.SizeOf(structure);
-                structure.fMask = 1;
+                structure.fMask = RBBIM.STYLE;
                 IntPtr ptr2 = PInvoke.SendMessage(Handle, 0x405, IntPtr.Zero, ref structure);
-                return ptr2 != IntPtr.Zero && (structure.fStyle & 0x100) != 0;
+                return ptr2 != IntPtr.Zero && (structure.fStyle & RBBS.NOGRIPPER) != 0;
             }
             set {
                 const int LockToolbarsCmdID = 0xA20C;
