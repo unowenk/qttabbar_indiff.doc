@@ -86,7 +86,9 @@ namespace Ricciolo.Controls
 				num2 -= num3;
 				num += num3;
 			}
-			expander?.Arrange(new Rect(FirstColumnIndent, (arrangeSize.Height - expander.DesiredSize.Height) / 2.0, expander.DesiredSize.Width, expander.DesiredSize.Height));
+			//expander?.Arrange(new Rect(FirstColumnIndent, (arrangeSize.Height - expander.DesiredSize.Height) / 2.0, expander.DesiredSize.Width, expander.DesiredSize.Height));
+			if (expander!=null)
+				expander.Arrange(new Rect(FirstColumnIndent, (arrangeSize.Height - expander.DesiredSize.Height) / 2.0, expander.DesiredSize.Width, expander.DesiredSize.Height));
 			return result;
 		}
 

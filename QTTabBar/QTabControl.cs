@@ -116,6 +116,7 @@ namespace QTTabBarLib {
         public event QTabCancelEventHandler PlusButtonClicked;
 
         public QTabControl() {
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "QTabControl");
             fNeedPlusButton = Config.Tabs.NeedPlusButton;
             //SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.SupportsTransparentBackColor | ControlStyles.ResizeRedraw | ControlStyles.UserPaint, true);
             SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor | ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, value: true);

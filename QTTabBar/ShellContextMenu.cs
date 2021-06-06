@@ -32,6 +32,8 @@ using BandObjectLib.Interop.QTTabBar;
 
 namespace QTTabBarLib {
     class ShellContextMenu : IDisposable {
+        public ShellContextMenu() { BandObjectLib.Logging.Add_DEBUG("Constructor.log", "ShellContextMenu"); }
+
         private IContextMenu2 pIContextMenu2;
 
         /// <summary>

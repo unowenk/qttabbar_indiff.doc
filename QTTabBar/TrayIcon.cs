@@ -30,6 +30,8 @@ using BandObjectLib.Interop;
 
 namespace QTTabBarLib {
     class TrayIcon {
+        public TrayIcon() { BandObjectLib.Logging.Add_DEBUG("Constructor.log", "TrayIcon"); }
+
         private struct Instance {
             public int ShowWindowCode;
             public IntPtr ExplorerHandle;

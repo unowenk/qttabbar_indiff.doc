@@ -20,7 +20,122 @@
 #include <Shlobj.h>
 #include <UIAutomationCore.h>
 #include "CComPtr.h"
-#include "..\MinHook\MinHook.h"
+
+
+
+/*
+
+//%(projectdir)MinHook_133_lib\include
+//%(projectdir)MinHook_133_lib\include;%(AdditionalIncludeDirectories)
+//%(projectdir)MinHook_133_lib\lib
+//%(projectdir)MinHook_133_lib\lib;%(AdditionalLibraryDirectories)
+
+//https://zhuanlan.zhihu.com/p/78693248
+//MSC    1.0   _MSC_VER == 100
+//MSC    2.0   _MSC_VER == 200
+//MSC    3.0   _MSC_VER == 300
+//MSC    4.0   _MSC_VER == 400
+//MSC    5.0   _MSC_VER == 500
+//MSC    6.0   _MSC_VER == 600
+//MSC    7.0   _MSC_VER == 700
+//MSVC++ 1.0   _MSC_VER == 800
+//MSVC++ 2.0   _MSC_VER == 900
+//MSVC++ 4.0   _MSC_VER == 1000 (Developer Studio 4.0)
+//MSVC++ 4.2   _MSC_VER == 1020 (Developer Studio 4.2)
+//MSVC++ 5.0   _MSC_VER == 1100 (Visual Studio 97 version 5.0)
+//MSVC++ 6.0   _MSC_VER == 1200 (Visual Studio 6.0 version 6.0)
+//MSVC++ 7.0   _MSC_VER == 1300 (Visual Studio.NET 2002 version 7.0)
+//MSVC++ 7.1   _MSC_VER == 1310 (Visual Studio.NET 2003 version 7.1)
+//MSVC++ 8.0   _MSC_VER == 1400 (Visual Studio 2005 version 8.0)
+//MSVC++ 9.0   _MSC_VER == 1500 (Visual Studio 2008 version 9.0)
+//MSVC++ 10.0  _MSC_VER == 1600 (Visual Studio 2010 version 10.0)
+//MSVC++ 11.0  _MSC_VER == 1700 (Visual Studio 2012 version 11.0)
+//MSVC++ 12.0  _MSC_VER == 1800 (Visual Studio 2013 version 12.0)
+//MSVC++ 14.0  _MSC_VER == 1900 (Visual Studio 2015 version 14.0)
+//MSVC++ 14.1  _MSC_VER == 1910 (Visual Studio 2017 version 15.0)
+//MSVC++ 14.11 _MSC_VER == 1911 (Visual Studio 2017 version 15.3)
+//MSVC++ 14.12 _MSC_VER == 1912 (Visual Studio 2017 version 15.5)
+//MSVC++ 14.13 _MSC_VER == 1913 (Visual Studio 2017 version 15.6)
+//MSVC++ 14.14 _MSC_VER == 1914 (Visual Studio 2017 version 15.7)
+//MSVC++ 14.15 _MSC_VER == 1915 (Visual Studio 2017 version 15.8)
+//MSVC++ 14.16 _MSC_VER == 1916 (Visual Studio 2017 version 15.9)
+//MSVC++ 14.2  _MSC_VER == 1920 (Visual Studio 2019 Version 16.0)
+//MSVC++ 14.21 _MSC_VER == 1921 (Visual Studio 2019 Version 16.1)
+//MSVC++ 14.22 _MSC_VER == 1922 (Visual Studio 2019 Version 16.2)
+*/
+
+#include "MinHook.h"
+
+#if _MSC_VER <1600 // MSC    1.0   _MSC_VER == 100  ---- MS VC++ 9.0 _MSC_VER = 1500(VisualStudio 2008)
+    #define Minhook_MSVC_Ver 90
+#elif _MSC_VER >= 1600 && _MSC_VER <1700 // MSVC++ 10.0  _MSC_VER == 1600 (Visual Studio 2010 version 10.0)
+    #define Minhook_MSVC_Ver 100
+#elif _MSC_VER >= 1700 && _MSC_VER <1800 // MSVC++ 11.0  _MSC_VER == 1700 (Visual Studio 2012 version 11.0)
+    #define Minhook_MSVC_Ver 110
+#elif _MSC_VER >= 1800 && _MSC_VER <1900 // MSVC++ 12.0  _MSC_VER == 1800 (Visual Studio 2013 version 12.0)
+    #define Minhook_MSVC_Ver 120
+#elif _MSC_VER >= 1900 && _MSC_VER <1910 // MSVC++ 14.0  _MSC_VER == 1900 (Visual Studio 2015 version 14.0)
+    #define Minhook_MSVC_Ver 140
+#elif _MSC_VER >= 1910  // MSVC++ 14.1  _MSC_VER == 1910 (Visual Studio 2017 version 15.0)   ----    MSVC++ 14.2  _MSC_VER == 1920 (Visual Studio 2019 Version 16.0)
+    #define Minhook_MSVC_Ver 141
+#endif
+
+#define STRING2(x) #x 
+#define STRING(x) STRING2(x)  
+#define Minhook_ver "v"STRING(Minhook_MSVC_Ver)
+
+#if _WIN64
+#define x86x64 "x64"
+#else
+#define x86x64 "x86"
+#endif
+
+
+#if _DEBUG
+#define Flag_DEBUG "d"
+#else
+#define Flag_DEBUG ""
+#endif
+
+#if _DLL
+#define __ConfigurationType "md"
+#elif _MT
+#define __ConfigurationType "mt"
+#pragma comment(linker, "/NODEFAULTLIB:LIBCMT" Flag_DEBUG ".lib")
+#pragma comment(linker, "/NODEFAULTLIB:LIBC" Flag_DEBUG ".lib")
+#endif
+#define MinHook_ConfigurationType "md"
+//虽然看上去应该用mt，但是md要改的少
+
+#define Minhook_lib_name  "libMinHook-" x86x64 "-" Minhook_ver "-" MinHook_ConfigurationType  Flag_DEBUG ".lib"
+//#pragma message(   Minhook_lib_name  )
+#pragma comment(lib, Minhook_lib_name)
+
+
+template <typename T>
+inline MH_STATUS MH_CreateHookEx(LPVOID pTarget, LPVOID pDetour, T** ppOriginal)
+{
+    return MH_CreateHook(pTarget, pDetour, reinterpret_cast<LPVOID*>(ppOriginal));
+}
+
+template <typename T>
+inline MH_STATUS MH_CreateHookApiEx(
+    LPCWSTR pszModule, LPCSTR pszProcName, LPVOID pDetour, T** ppOriginal)
+{
+    return MH_CreateHookApi(
+        pszModule, pszProcName, pDetour, reinterpret_cast<LPVOID*>(ppOriginal));
+}
+
+//// Create a hook for MessageBoxW, in disabled state.
+//if (MH_CreateHookApiEx(L"user32", "MessageBoxW", &DetourMessageBoxW, &fpMessageBoxW) != MH_OK)
+//{
+//    return 1;
+//}
+
+
+
+
+
 
 // Hook declaration macro
 #define DECLARE_HOOK(id, ret, name, params)                                         \
@@ -30,13 +145,14 @@
     const int hook##name = id;                  /* Hook ID                      */ 
 
 // Hook creation macros
-#define CREATE_HOOK(address, name) {                                                            \
+#define CREATE_HOOK(address, name, callbacks) {                                                            \
     MH_STATUS ret = MH_CreateHook(address, &Detour##name, reinterpret_cast<void**>(&fp##name)); \
     if(ret == MH_OK) ret = MH_EnableHook(address);                                              \
     callbacks.fpHookResult(hook##name, ret);                                                    \
 }
-#define CREATE_COM_HOOK(punk, idx, name) \
-    CREATE_HOOK((*(void***)((IUnknown*)(punk)))[idx], name)
+#define CREATE_COM_HOOK(punk, idx, name, callbacks) \
+    CREATE_HOOK((*(void***)((IUnknown*)(punk)))[idx], name, callbacks)
+//void** ppv
 
 // A few undocumented interfaces and classes, of which we only really need the IIDs.
 MIDL_INTERFACE("0B907F92-1B63-40C6-AA54-0D3117F03578") IListControlHost     : public IUnknown {};
@@ -99,17 +215,21 @@ unsigned int WM_CHECKPULSE;
 struct CallbackStruct {
     void (*fpHookResult)(int hookId, int retcode);
     bool (*fpNewWindow)(LPCITEMIDLIST pIDL);
-};
-CallbackStruct callbacks;
+} callbacks;
 
 // Other stuff
 HMODULE hModAutomation = NULL;
 FARPROC fpRealRREP = NULL;
 FARPROC fpRealCI = NULL;
-
 extern "C" __declspec(dllexport) int Initialize(CallbackStruct* cb);
 extern "C" __declspec(dllexport) int Dispose();
 extern "C" __declspec(dllexport) int InitShellBrowserHook(IShellBrowser* psb);
+
+//QTUtility() 调用Initialize
+//QTTabBarLib.QTTabBarLibClass.OnExplorerAttached()  调用InitShellBrowserHook
+
+//QTTabBarLib.HookLibManager.Initialize_old() 废弃
+//QTTabBarLib.HookLibManager.callbackStruct{HookResult,NewWindow}
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved) {
     switch (ul_reason_for_call) {
@@ -129,7 +249,7 @@ int Initialize(CallbackStruct* cb) {
     volatile static long initialized;
     if(InterlockedIncrement(&initialized) != 1) {
         // Return if another thread has beaten us here.
-        initialized = 1;
+        //initialized = 1;
         return MH_OK;
     }
 
@@ -152,23 +272,23 @@ int Initialize(CallbackStruct* cb) {
     WM_CHECKPULSE       = RegisterWindowMessageA("QTTabBar_CheckPulse");
 
     // Create and enable the CoCreateInstance, RegisterDragDrop, and SHCreateShellFolderView hooks.
-    CREATE_HOOK(&CoCreateInstance, CoCreateInstance);
-    CREATE_HOOK(&RegisterDragDrop, RegisterDragDrop);
-    CREATE_HOOK(&SHCreateShellFolderView, SHCreateShellFolderView);
+    CREATE_HOOK(&CoCreateInstance, CoCreateInstance, callbacks);
+    CREATE_HOOK(&RegisterDragDrop, RegisterDragDrop, callbacks);
+    CREATE_HOOK(&SHCreateShellFolderView, SHCreateShellFolderView, callbacks);
 
     // Create and enable the UiaReturnRawElementProvider hook (maybe)
     hModAutomation = LoadLibraryA("UIAutomationCore.dll");
     if(hModAutomation != NULL) {
         fpRealRREP = GetProcAddress(hModAutomation, "UiaReturnRawElementProvider");
         if(fpRealRREP != NULL) {
-            CREATE_HOOK(fpRealRREP, UiaReturnRawElementProvider);
+            CREATE_HOOK(fpRealRREP, UiaReturnRawElementProvider, callbacks);
         }
     }
     
     // Create an instance of the breadcrumb bar so we can hook it.
     CComPtr<IShellNavigationBand> psnb;
     if(psnb.Create(__uuidof(CBreadcrumbBar), CLSCTX_INPROC_SERVER)) {
-        CREATE_COM_HOOK(psnb, 4, SetNavigationState)
+        CREATE_COM_HOOK(psnb, 4, SetNavigationState, callbacks)
     }
 
 
@@ -179,10 +299,10 @@ int Initialize(CallbackStruct* cb) {
         CComPtr<ICommonExplorerHost> pceh;
         CComPtr<IExplorerFactory> pef;
         if(pceh.QueryFrom(punk)) {
-            CREATE_COM_HOOK(pceh, 3, ShowWindow_7)
+            CREATE_COM_HOOK(pceh, 3, ShowWindow_7, callbacks)
         }
         else if(pef.QueryFrom(punk)) {
-            CREATE_COM_HOOK(pef, 3, ShowWindow_Vista)
+            CREATE_COM_HOOK(pef, 3, ShowWindow_Vista, callbacks)
         }
     }
     return MH_OK;
@@ -192,12 +312,12 @@ int InitShellBrowserHook(IShellBrowser* psb) {
     volatile static long initialized;
     if(InterlockedIncrement(&initialized) != 1) {
         // Return if another thread has beaten us here.
-        initialized = 1;
+        //initialized = 1;
         return MH_OK;
     }
 
     // Create the BrowseObject hook
-    CREATE_COM_HOOK(psb, 11, BrowseObject);
+    CREATE_COM_HOOK(psb, 11, BrowseObject, callbacks);
 
     // Vista and 7 have different IShellBrowserService interfaces.
     // Hook UpdateWindowList in whichever one we have, and get the TravelLog.
@@ -205,11 +325,11 @@ int InitShellBrowserHook(IShellBrowser* psb) {
     CComPtr<IShellBrowserService_Vista> psbsv;
     CComPtr<ITravelLog> ptl;
     if(psbs7.QueryFrom(psb)) {
-        CREATE_COM_HOOK(psbs7, 10, UpdateWindowList);
+        CREATE_COM_HOOK(psbs7, 10, UpdateWindowList, callbacks);
         psbs7->GetTravelLog(&ptl);
     }
     else if(psbsv.QueryFrom(psb)) {
-        CREATE_COM_HOOK(psbsv, 17, UpdateWindowList);
+        CREATE_COM_HOOK(psbsv, 17, UpdateWindowList, callbacks);
         psbsv->GetTravelLog(&ptl);
     }
 
@@ -217,7 +337,7 @@ int InitShellBrowserHook(IShellBrowser* psb) {
     if(ptl != NULL) {
         CComPtr<ITravelLogEx> ptlex;
         if(ptlex.QueryFrom(ptl)) {
-            CREATE_COM_HOOK(ptlex, 11, TravelToEntry);
+            CREATE_COM_HOOK(ptlex, 11, TravelToEntry, callbacks);
         }
     }
     return MH_OK;
@@ -234,6 +354,12 @@ int Dispose() {
 
     return S_OK;
 }
+
+
+
+
+
+
 
 //////////////////////////////
 // Detour Functions
@@ -264,16 +390,16 @@ HRESULT WINAPI DetourSHCreateShellFolderView(const SFV_CREATE* pcsfv, IShellView
     CComPtr<IShellView> psv(*ppsv);
     if(SUCCEEDED(ret) && psv.Implements(IID_CDefView)) {
 
-        CREATE_COM_HOOK(pcsfv->psfvcb, 3, MessageSFVCB);
+        CREATE_COM_HOOK(pcsfv->psfvcb, 3, MessageSFVCB, callbacks);
 
         CComPtr<IShellView3> psv3;
         if(psv3.QueryFrom(psv)) {
-            CREATE_COM_HOOK(psv3, 20, CreateViewWindow3);
+            CREATE_COM_HOOK(psv3, 20, CreateViewWindow3, callbacks);
         }
 
         CComPtr<IListControlHost> plch;
         if(plch.QueryFrom(psv)) {
-            CREATE_COM_HOOK(plch, 3, OnActivateSelection);
+            CREATE_COM_HOOK(plch, 3, OnActivateSelection, callbacks);
         }
 
         // Disable this hook, no need for it anymore.
@@ -323,7 +449,7 @@ HRESULT WINAPI DetourMessageSFVCB(IShellFolderViewCB* _this, UINT uMsg, WPARAM w
 // The purpose of this hook is just to set another hook.  It is disabled once the other hook is set.
 LRESULT WINAPI DetourUiaReturnRawElementProvider(HWND hwnd, WPARAM wParam, LPARAM lParam, IRawElementProviderSimple* el) {
     if(fpQueryInterface == NULL && (LONG)lParam == OBJID_CLIENT && SendMessage(hwnd, WM_ISITEMSVIEW, 0, 0) == 1) {
-        CREATE_COM_HOOK(el, 0, QueryInterface);
+        CREATE_COM_HOOK(el, 0, QueryInterface, callbacks);
         // Disable this hook, no need for it anymore.
         MH_DisableHook(fpRealRREP);
     }

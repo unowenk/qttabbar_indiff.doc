@@ -8,6 +8,25 @@ using System.Security;
 
 namespace BandObjectLib.Interop
 {
+    //原始来源
+    //https://www.codeproject.com/Articles/2219/Extending-Explorer-with-Band-Objects-using-NET-and
+    //https://www.codeproject.com/Articles/14141/Band-Objects-NET-2-0-Redux
+    //https://stackoverflow.com/questions/35882294/how-to-add-content-to-windows-taskbar
+
+    //其他案例
+    //https://github.com/navhaxs/media-control-deskband
+    //https://github.com/dwmkerr/sharpshell/
+    //http://www.verysource.com/code/7917459_1/BandObjectLib.sln.html
+    //http://www.verysource.com/cate_toolbar/
+
+
+    //gacutil 安装dll与卸载，
+    //https://www.cnblogs.com/menyiin/p/4793292.html
+
+
+    //Interop.SHDocVw正确引用
+    //https://social.msdn.microsoft.com/Forums/windows/en-US/5f14d33c-fc55-415e-816e-666e89b68a92/could-not-load-file-or-assembly-interopshdocvw?forum=winformsdesigner
+
 
     namespace MSBandObject
     {
@@ -99,18 +118,27 @@ namespace BandObjectLib.Interop
 
 
         //combase.dll\IPersistStream.PSFactoryBuffer
-        /// <remarks> 允许资源管理器栏加载或保存持久数据。如果没有持久性数据，则这些方法仍必须返回成功代码。 </remarks>
+        /// <remarks> 
+        /// 允许资源管理器栏加载或保存持久数据。如果没有持久性数据，则这些方法仍必须返回成功代码。
+        /// IPersistStream的最小实现。IPersist :: GetClassID返回对象的CLSID（CLSID_SampleExplorerBar），其余部分返回S_OK，S_FALSE或E_NOTIMPL。
+        /// </remarks>
         [ComImport, Guid("00000109-0000-0000-C000-000000000046"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown), SuppressUnmanagedCodeSecurity]
         public interface IPersistStream
         {
+            /// <remarks> 返回对象的CLSID </remarks> 
             void GetClassID(out Guid pClassID);
+            /// <remarks> 最小实现：返回S_OK，S_FALSE或E_NOTIMPL </remarks> 
             [PreserveSig]
             int IsDirty();
+            /// <remarks> 最小实现：返回S_OK，S_FALSE或E_NOTIMPL </remarks> 
             void IPersistStreamLoad([In, MarshalAs(UnmanagedType.Interface)] object pStm);
+            /// <remarks> 最小实现：返回S_OK，S_FALSE或E_NOTIMPL </remarks> 
             void Save([In, MarshalAs(UnmanagedType.Interface)] IntPtr pStm, [In, MarshalAs(UnmanagedType.Bool)] bool fClearDirty);
+            /// <remarks> 最小实现：返回S_OK，S_FALSE或E_NOTIMPL </remarks> 
             [PreserveSig]
             int GetSizeMax(out ulong pcbSize);
         }
+
 
 
         //OneCoreUAPCommonProxyStub.dll\IInputObject.PSFactoryBuffer
@@ -181,6 +209,8 @@ namespace BandObjectLib.Interop
             void CloseDW([In] uint dwReserved);
             void ResizeBorderDW(IntPtr prcBorder, [In, MarshalAs(UnmanagedType.IUnknown)] object punkToolbarSite, bool fReserved);
             void GetBandInfo(uint dwBandID, uint dwViewMode, ref DESKBANDINFO pdbi);
+
+
             void CanRenderComposited(out bool pfCanRenderComposited);
             void SetCompositionState(bool fCompositionEnabled);
             void GetCompositionState(out bool pfCompositionEnabled);

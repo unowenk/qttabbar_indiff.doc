@@ -41,6 +41,7 @@ namespace QTTabBarLib {
         public delegate T Query<out T>(AutomationElementFactory factory);
 
         static AutomationManager() {
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "AutomationManager");
             Guid rclsid = CLSID_CUIAutomation;
             Guid riid = IID_IUIAutomation;
             object obj;

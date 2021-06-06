@@ -35,6 +35,8 @@ namespace QTTabBarLib {
         private IFolderView folderView;
 
         public ShellBrowserEx(IShellBrowser shellBrowser) {
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "ShellBrowserEx");
+
             this.shellBrowser = shellBrowser;
             OnNavigateComplete();
         }

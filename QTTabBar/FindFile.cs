@@ -36,6 +36,7 @@ namespace QTTabBarLib {
         private string path;
 
         public FindFile(string path, bool fSearchHidden, bool fSearchSystem) {
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "FindFile");
             this.path = path;
             if(!this.path.EndsWith(@"\")) {
                 this.path = this.path + @"\";

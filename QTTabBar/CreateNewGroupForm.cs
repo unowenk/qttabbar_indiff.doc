@@ -31,6 +31,7 @@ namespace QTTabBarLib {
         private TextBox textBox1;
 
         public CreateNewGroupForm(string currentPath, QTabControl.QTabCollection tabs) {
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "CreateNewGroupForm");
             newPath = currentPath;
             Tabs = tabs;
             InitializeComponent();

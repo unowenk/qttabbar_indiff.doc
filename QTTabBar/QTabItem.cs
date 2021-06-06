@@ -29,6 +29,8 @@ using QTTabBarLib.Interop;
 namespace QTTabBarLib {
     [Serializable]
     internal sealed class QTabItem {
+        public QTabItem() { BandObjectLib.Logging.Add_DEBUG("Constructor.log", "QTabItem"); }
+
         // Static stuff
         internal const string SEPARATOR_COMMENT = ": ";
         internal const string SEPARATOR_SUBTEXT = "@ ";

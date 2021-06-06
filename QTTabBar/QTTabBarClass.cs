@@ -252,6 +252,8 @@ namespace QTTabBarLib {
         #endregion
 
         public QTTabBarClass() {
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "QTTabBarClass");
+
             QTUtility.Initialize();
             try {
                 string installDateString;
@@ -2646,6 +2648,8 @@ namespace QTTabBarLib {
                 return true;
             }
             else if(msg.Msg == WM_SHOWHIDEBARS) {
+                //BandObjectLib.Logging.Add_DEBUG("ShowBrowserBar.log", "msg.Msg == WM_SHOWHIDEBARS");
+                BandObjectLib.Logging.Add_DEBUG("Constructor.log", "msg.Msg == WM_SHOWHIDEBARS");
                 // Todo: hardcoding = bad
                 object pvaTabBar = new Guid("{d2bf470e-ed1c-487f-a333-2bd8835eb6ce}").ToString("B");
                 object pvaButtonBar = new Guid("{d2bf470e-ed1c-487f-a666-2bd8835eb6ce}").ToString("B");

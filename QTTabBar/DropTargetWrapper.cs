@@ -49,6 +49,8 @@ namespace QTTabBarLib.Interop {
         public event DragEventHandler DragFileOver;
 
         public DropTargetWrapper(Control ctrl) {
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "DropTargetWrapper");
+
             hwnd = ctrl.Handle;
             PInvoke.RegisterDragDrop(hwnd, this);
         }

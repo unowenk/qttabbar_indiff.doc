@@ -109,6 +109,7 @@ namespace QTTabBarLib {
         private ToolStripClasses toolStrip;
 
         public QTButtonBar() {
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "QTButtonBar");
             InitializeComponent();
         }
 

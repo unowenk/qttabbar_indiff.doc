@@ -31,6 +31,7 @@ using BandObjectLib.Interop.QTTabBar;
 
 namespace QTTabBarLib {
     public sealed partial class QTTabBarClass {
+
         internal sealed class PluginServer : IPluginServer, IDisposable {
             private Dictionary<string, string[]> dicLocalizingStrings;
             private BandObjectLib.Interop.QTPluginLib.IShellBrowser shellBrowser;
@@ -54,6 +55,8 @@ namespace QTTabBarLib {
             public event PluginEventHandler TabRemoved;
 
             public PluginServer(QTTabBarClass tabBar) {
+                BandObjectLib.Logging.Add_DEBUG("Constructor.log", "PluginServer");
+
                 this.tabBar = tabBar;
                 shellBrowser = (BandObjectLib.Interop.QTPluginLib.IShellBrowser)this.tabBar.ShellBrowser.GetIShellBrowser();
                 dicLocalizingStrings = new Dictionary<string, string[]>();

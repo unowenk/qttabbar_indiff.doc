@@ -32,6 +32,8 @@ namespace QTTabBarLib {
 
         public QMenuItem(string title, MenuGenre menuGenre)
             : base(title) {
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "QMenuItem");
+
             Genre = menuGenre;
         }
 

@@ -33,6 +33,7 @@ namespace QTTabBarLib {
 
     [Guid("D2BF470E-ED1C-487F-A777-2BD8835EB6CE"), ComVisible(true), ClassInterface(ClassInterfaceType.None)]
     public class AutoLoader : IObjectWithSite {
+        public AutoLoader() { BandObjectLib.Logging.Add_DEBUG("Constructor.log", "AutoLoader"); }
         private IWebBrowser2 explorer;       
         private const string BHOKEYNAME = @"Software\Microsoft\Windows\CurrentVersion\Explorer\Browser Helper Objects\";
         private const int E_FAIL = unchecked((int)0x80004005);
@@ -56,6 +57,7 @@ namespace QTTabBarLib {
         }
 
         public void SetSite(object site) {
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "AutoLoader.SetSite");
             explorer = site as IWebBrowser2;
             if(explorer == null || Process.GetCurrentProcess().ProcessName == "iexplore") {
                 Marshal.ThrowExceptionForHR(E_FAIL);
@@ -70,6 +72,8 @@ namespace QTTabBarLib {
         }
 
         private void ActivateIt() {
+            //BandObjectLib.Logging.Add_DEBUG("ShowBrowserBar.log", "AutoLoader.SetSite.ActivateIt");
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "AutoLoader.SetSite.ActivateIt");
             string installDateString;
             DateTime installDate;
             string minDate = DateTime.MinValue.ToString();

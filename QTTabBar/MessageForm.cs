@@ -44,6 +44,8 @@ namespace QTTabBarLib {
         private Timer timerClose;
 
         private MessageForm(string strMessage, string strTitle, string strExecute, MessageBoxIcon icon, int msecDuration) {
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "MessageForm");
+
             Icon question;
             InitializeComponent();
             Text = strTitle;

@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>QTTabBarLib</RootNamespace>
     <AssemblyName>QTTabBar</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\QTTabBar Rebirth.snk</AssemblyOriginatorKeyFile>
@@ -453,7 +453,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="ClassDiagram1.cd" />
-    <None Include="QTTabBar.ruleset" />
     <None Include="Resources\ButtonStrip24.png" />
   </ItemGroup>
   <ItemGroup>

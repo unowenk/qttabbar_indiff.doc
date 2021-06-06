@@ -78,6 +78,7 @@ namespace QTTabBarLib {
         }
 
         public RebarController(QTTabBarClass tabbar, IntPtr hwndReBar, IOleCommandTarget bandObjectSite) {
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "RebarController");
             this.tabbar = tabbar;
             this.bandObjectSite = bandObjectSite;
             ExplorerHandle = PInvoke.GetAncestor(hwndReBar, 2);

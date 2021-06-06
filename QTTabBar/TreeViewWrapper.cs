@@ -37,6 +37,7 @@ namespace QTTabBarLib {
         private bool fPreventSelChange;
 
         public TreeViewWrapper(IntPtr hwnd, INameSpaceTreeControl treeControl) {
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "TreeViewWrapper");
             this.treeControl = treeControl;
             treeController = new NativeWindowController(hwnd);
             treeController.MessageCaptured += TreeControl_MessageCaptured;

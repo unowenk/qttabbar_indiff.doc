@@ -48,6 +48,7 @@ namespace QTTabBarLib {
         public event ItemCheckEventHandler Switched;
 
         public TabSwitchForm() {
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "TabSwitchForm");
             InitializeComponent();
             fntMenu = SystemFonts.MenuFont;
             fntMenuBold = new Font(fntMenu, FontStyle.Bold);

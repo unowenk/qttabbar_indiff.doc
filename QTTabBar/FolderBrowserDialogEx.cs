@@ -9,6 +9,8 @@ using BandObjectLib.Interop.QTTabBar;
 namespace QTTabBarLib {
     public class FolderBrowserDialogEx : CommonDialog {
         public FolderBrowserDialogEx() {
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "FolderBrowserDialogEx");
+
             ShowNewFolderButton = true;
         }
 

@@ -62,6 +62,7 @@ namespace QTTabBarLib {
         private static string VALUE_ERROR = "Error. Failed to open?";
 
         public FileHashComputerForm() {
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "FileHashComputerForm");
             InitializeComponent();
             using(RegistryKey key = Registry.CurrentUser.CreateSubKey(RegConst.Root)) {
                 if(key != null) {

@@ -29,6 +29,8 @@ using BandObjectLib.Interop;
 
 namespace QTTabBarLib {
     internal sealed class ToolStripClasses : ToolStrip {
+        public ToolStripClasses() { BandObjectLib.Logging.Add_DEBUG("Constructor.log", "ToolStripClasses"); }
+
         private bool fMA;
 
         public event EventHandler MouseActivated;

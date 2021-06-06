@@ -57,6 +57,7 @@ namespace QTTabBarLib {
         public event QEventHandler ThumbnailVisibleChanged;
 
         public ThumbnailTooltipForm() {
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "ThumbnailTooltipForm");
             InitializeComponent();
             lstPathFailedThumbnail = new List<string>();
             imageCacheStore = new ImageCacheStore(0x80);

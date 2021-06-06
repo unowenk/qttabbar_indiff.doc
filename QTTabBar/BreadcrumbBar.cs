@@ -42,6 +42,7 @@ namespace QTTabBarLib {
         private IntPtr hdpa = IntPtr.Zero;
 
         public BreadcrumbBar(IntPtr hwnd) {
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "BreadcrumbBar");
             BreadcrumbController = new NativeWindowController(hwnd);
             BreadcrumbController.MessageCaptured += BreadcrumbController_MessageCaptured;
             ParentController = new NativeWindowController(PInvoke.GetParent(hwnd));

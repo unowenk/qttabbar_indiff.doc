@@ -25,6 +25,7 @@ namespace QTTabBarLib {
     internal sealed class DataGridViewEx : DataGridView {
         public DataGridViewEx() {
             DoubleBuffered = true;
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "DataGridViewEx");
         }
     }
 

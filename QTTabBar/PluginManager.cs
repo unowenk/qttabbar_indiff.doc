@@ -28,6 +28,7 @@ using QTPlugin;
 
 namespace QTTabBarLib {
     internal static class PluginManager {
+
         private static IEncodingDetector plgEncodingDetector;
         private static Dictionary<string, PluginAssembly> dicPluginAssemblies = new Dictionary<string, PluginAssembly>();
         private static Dictionary<string, Plugin> dicStaticPluginInstances = new Dictionary<string, Plugin>();      

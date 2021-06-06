@@ -71,6 +71,7 @@ namespace QTTabBarLib {
         public event ItemRightClickedEventHandler MultipleMenuItemsRightClicked;
 
         public SubDirTipForm(IntPtr hwndMessageReflect, bool fEnableShiftKeyOnDDMR, AbstractListView lvw) {
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "SubDirTipForm");
             listView = lvw;
             this.hwndMessageReflect = hwndMessageReflect;
             hwndDialogParent = listView.Handle;

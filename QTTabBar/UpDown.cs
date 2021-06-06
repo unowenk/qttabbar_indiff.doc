@@ -33,6 +33,7 @@ namespace QTTabBarLib {
         public event QEventHandler ValueChanged;
 
         public UpDown() {
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "UpDown");
             Size = new Size(0x24, 0x18);
             nativeUpDown = new NativeUpDown(this);
         }

@@ -54,7 +54,9 @@ namespace QTTabBarLib {
         internal const string SEPARATOR_PATH_HASH = "???";
 
         static IDLWrapper() {
-            try {
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "IDLWrapper");
+            try
+            {
                 string str;
                 dicCacheIDLs = new Dictionary<string, byte[]>();
                 dicCSIDLTable = new Dictionary<string, int>();

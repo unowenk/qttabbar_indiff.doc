@@ -41,6 +41,8 @@ namespace QTTabBarLib {
         internal ExtendedSysListView32(ShellBrowserEx ShellBrowser, IntPtr hwndShellView, IntPtr hwndListView, IntPtr hwndSubDirTipMessageReflect)
                 : base(ShellBrowser, hwndShellView, hwndListView, hwndSubDirTipMessageReflect) {
             SetStyleFlags();
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "ExtendedSysListView32");
+
         }
 
         private int CorrectHotItem(int iItem) {

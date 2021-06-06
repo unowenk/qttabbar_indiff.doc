@@ -28,7 +28,6 @@ using BandObjectLib.Interop.RebarControls;
 using BandObjectLib.Interop.MSBandObject;
 
 
-
 //https://docs.microsoft.com/zh-cn/cpp/mfc/rebar-controls-and-bands?view=msvc-160
 //https://docs.microsoft.com/en-us/previous-versions/windows/desktop/legacy/cc144099(v=vs.85)?redirectedfrom=MSDN
 
@@ -40,15 +39,23 @@ namespace BandObjectLib
 
     public class BandObject : UserControl, IDeskBand, IDockingWindow, IInputObject, IObjectWithSite, IOleWindow, IPersistStream {
         
+        public BandObject() { Logging.Add_DEBUG("Constructor.log", "BandObject"); }
         private Size _minSize = new Size(-1, -1);
         public Size MinSize
         {
-            get => _minSize;
-            set => _minSize = value;
+            get
+            {
+                return _minSize;
+            }
+
+            set
+            {
+                _minSize = value;
+            }
         }
         /// <summary> 输入站点 </summary>
         protected IInputObjectSite BandObjectSite;
-        /// <summary> 输入站点（子）窗体。接口被包装为WebBrowser </summary>
+        /// <summary> 输入站点（子）窗体？。接口被包装为WebBrowser </summary>
         protected WebBrowserClass Explorer;
         /// <summary> 输入站点父窗体句柄 </summary>
         protected IntPtr ReBarHandle;
@@ -143,7 +150,9 @@ namespace BandObjectLib
         }
 
 
-        // ---------- interface ----------
+
+
+        #region ---------- interface ----------
 
         //IObjectWithSite.SetSite
         public virtual void SetSite(object pUnkSite)
@@ -356,9 +365,10 @@ namespace BandObjectLib
             return E_NOTIMPL;
         }
 
+        #endregion
 
 
-        // ---------- override EventA ----------
+        #region ---------- override EventA ----------
 
         protected override void OnGotFocus(EventArgs e)
         {
@@ -379,8 +389,11 @@ namespace BandObjectLib
         }
 
 
+        #endregion
 
-        // ---------- customize 自定义 protected or protected virtual ----------
+
+
+        #region ---------- customize 自定义 protected or protected virtual ----------
         /// <remarks> 确定DeskBand是否在前面休息。？? </remarks>
         // Determines if the DeskBand is preceded by a break.
         protected bool BandHasBreak()
@@ -409,11 +422,11 @@ namespace BandObjectLib
             return true;
         }
 
+        #endregion
 
 
 
-
-        // ---------- customize 自定义 private。 ----------
+        #region ---------- customize 自定义 private。 ----------
         /// <remarks> 带的数量 </remarks>
         private int ActiveRebarCount() {
             return (int)PInvoke.SendMessage(ReBarHandle, RB.GETBANDCOUNT, IntPtr.Zero, IntPtr.Zero);
@@ -443,6 +456,7 @@ namespace BandObjectLib
             }
         }
 
+        #endregion
 
 
     }

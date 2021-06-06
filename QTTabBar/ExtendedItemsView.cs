@@ -36,6 +36,8 @@ namespace QTTabBarLib {
 
         internal ExtendedItemsView(ShellBrowserEx ShellBrowser, IntPtr hwndShellView, IntPtr hwndListView, IntPtr hwndSubDirTipMessageReflect)
                 : base(ShellBrowser, hwndShellView, hwndListView, hwndSubDirTipMessageReflect) {
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "ExtendedItemsView");
+
         }
 
         private AutomationElement ListItemElementFromPoint(AutomationElementFactory factory, Point pt) {

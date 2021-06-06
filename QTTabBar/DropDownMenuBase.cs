@@ -54,6 +54,9 @@ namespace QTTabBarLib {
         private static event EventHandler menuRendererChanged;
 
         public DropDownMenuBase(IContainer container) {
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "DropDownMenuBase");
+
+
             lstQMIResponds = new List<QMenuItem>();
             if(!fRendererInitialized) {
                 fRendererInitialized = true;

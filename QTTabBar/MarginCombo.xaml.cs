@@ -36,6 +36,8 @@ namespace QTTabBarLib
         private TextBox txtMargin;
         private MarginEntry[] entries;
         public MarginCombo() {
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "MarginCombo");
+
             InitializeComponent();
             ItemsSource = entries = new MarginEntry[] {
                 new MarginEntry(this, 0),

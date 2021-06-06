@@ -23,6 +23,8 @@ namespace QTTabBarLib {
         internal event MessageEventHandler MessageCaptured;
 
         public NativeWindowController(IntPtr hwnd) {
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "NativeWindowController");
+
             AssignHandle(hwnd);
         }
 

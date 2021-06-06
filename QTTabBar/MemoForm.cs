@@ -23,6 +23,8 @@ namespace QTTabBarLib {
     public sealed class MemoForm {
         [Serializable]
         public sealed class MemoStore {
+            public MemoStore() { BandObjectLib.Logging.Add_DEBUG("Constructor.log", "MemoStore"); }
+
             private Rectangle _bounds;
             private Dictionary<string, string> _dic;
             private double _opacity;

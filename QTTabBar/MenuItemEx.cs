@@ -26,6 +26,8 @@ namespace QTTabBarLib {
         public MenuItemEx(string text)
             : base(text) {
             OwnerDraw = true;
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "MenuItemEx");
+
         }
 
         protected override void OnDrawItem(DrawItemEventArgs e) {

@@ -85,12 +85,12 @@ Language="1033"
                             <netfx:NativeImage Id="ngen_QTTabBar.dll" Priority="0" Platform="all" />
                         </File>
                     </Component>
-                  <Component Id="HookLibrary32" Win64="yes" Guid="27af1a85-9a06-4c79-bdeb-d73fd4bd9574" DisableRegistryReflection="yes">
+                  <!--<Component Id="HookLibrary32" Win64="yes" Guid="27af1a85-9a06-4c79-bdeb-d73fd4bd9574" DisableRegistryReflection="yes">
                     <File Id="f5" Name="QTHookLib32.dll" Source="..\QTHookLib\bin\$(var.Configuration)\QTHookLib32.dll" KeyPath="yes" />
                   </Component>
                   <Component Id="HookLibrary64" Win64="yes" Guid="27af1a85-9a07-4c79-bdeb-d73fd4bd9574" DisableRegistryReflection="yes">
                     <File Id="f6" Name="QTHookLib64.dll" Source="..\QTHookLib\bin\$(var.Configuration)\QTHookLib64.dll" KeyPath="yes" />
-                  </Component>
+                  </Component>-->
 
                   <!-- Add by qwop start -->
                   <Component Id="QTQuick" Win64="yes" Guid="27af1a85-9a08-4c07-bdeb-d73fd4bd9574" DisableRegistryReflection="yes">

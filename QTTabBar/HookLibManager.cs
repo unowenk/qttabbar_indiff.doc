@@ -28,6 +28,7 @@ using BandObjectLib.Interop.QTTabBar;
 
 namespace QTTabBarLib {
     public static class HookLibManager {
+
         private static bool fShellBrowserIsHooked;
         private static IntPtr hHookLib;
         private static int[] hookStatus = Enumerable.Repeat(-1, Enum.GetNames(typeof(Hooks)).Length).ToArray();
@@ -82,6 +83,7 @@ namespace QTTabBarLib {
         /** Do not initialize hook.*/
         public static void Initialize()
         {
+            BandObjectLib.Logging.Add_DEBUG("Constructor.log", "HookLibManager Initialize");
         }
 
         public static void Initialize_old()
